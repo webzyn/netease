@@ -1,26 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Header from 'components/Layout/Header'
+import Footer from 'components/Layout/Footer'
+import Container from 'components/Layout/Container'
+import Nav from 'components/Layout/Nav'
+import Main from 'components/Layout/Main'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { get } from 'request'
+import { useEffect } from 'react'
+
+import { useDispatch } from 'react-redux/es/exports'
+import { useSelector } from 'react-redux/es/hooks/useSelector'
+import { setSongSheetList, resetSongSheetList } from 'store/festures/songSheetList'
+
+import './App.css'
+
+import { SongSheetList } from 'types/api'
+interface Result {
+  code: number
+  more: Boolean
+  playlist: SongSheetList
+  version: string
 }
 
-export default App;
+function App() {
+  const user = useSelector((store: any) => store.user)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    getPlayList()
+  }, [])
+
+  const getPlayList = async () => {
+    if (user.isLogin) {
+      const res: Result = (await get('/user/playlist', { uid: user.id })) as Result
+      if (res.code === 200 && res.playlist) {
+        dispatch(setSongSheetList(res.playlist))
+      }
+    } else {
+      dispatch(resetSongSheetList())
+    }
+  }
+  return (
+    <div className='App'>
+      <Header />
+      <Container>
+        <Nav />
+        <Main />
+      </Container>
+      <Footer />
+    </div>
+  )
+}
+
+export default App

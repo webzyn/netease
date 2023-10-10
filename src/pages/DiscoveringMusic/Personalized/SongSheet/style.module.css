@@ -1,0 +1,12 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.item {
+  margin-right: 18px;
+  width: calc((100% - 72px) / 5);
+}
+.item:nth-child(5n) {
+  margin-right: 0;
+}

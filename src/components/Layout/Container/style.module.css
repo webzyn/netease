@@ -1,0 +1,8 @@
+.container {
+  width: 100%;
+  height: calc(100vh - 60px - 72px - 1px);
+  min-height: calc(670px - 60px - 72px - 1px);
+  display: flex;
+  position: relative;
+  z-index: 1;
+}

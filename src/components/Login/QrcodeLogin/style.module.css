@@ -1,0 +1,22 @@
+.login_qrcode {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 100px;
+  .title {
+    font-size: 27px;
+    height: 27px;
+    line-height: 27px;
+    margin-bottom: 30px;
+  }
+  .descriptive {
+    margin: 15px 0 90px;
+    color: #666;
+    cursor: default;
+  }
+  .other {
+    margin-bottom: 60px;
+    color: #666;
+    cursor: pointer;
+  }
+}

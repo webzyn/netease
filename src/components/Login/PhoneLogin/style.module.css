@@ -1,0 +1,128 @@
+.qrcode {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f6f7f8;
+  position: relative;
+  overflow: hidden;
+  left: -24px;
+  cursor: pointer;
+}
+.triangle {
+  width: 100px;
+  height: 100px;
+  top: 12px;
+  left: 10px;
+  background-color: #fff;
+  position: absolute;
+  transform: rotate(45deg);
+}
+.main {
+  margin-top: 3px;
+  text-align: center;
+  .logo {
+    margin-bottom: 47px;
+  }
+  .login_input {
+    width: 260px;
+    height: 40px;
+  }
+}
+.login_select_code {
+  display: inline-block;
+  font-size: 12px;
+  transform: scale(0.9);
+  margin-right: 6px;
+  color: #333;
+}
+
+/* !设置antd内部类名 */
+.login_input :global(.ant-input-group-addon) {
+  border-radius: 6px 0 0 0 !important;
+}
+.login_input_code {
+  width: 260px;
+  height: 40px;
+}
+.login_input_code :global(.ant-input-group-addon) {
+  border-radius: 0 0 6px 0 !important;
+  border-top: none;
+}
+.getCode {
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+  display: inline-block;
+  border-left: 1px solid #e3dde3;
+  padding-left: 12px;
+  text-align: start;
+  width: 73px;
+}
+
+.buttonAreaWrapper {
+  height: 60px;
+  margin-top: 12px;
+}
+.buttonArea {
+  width: 260px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+/* 复选框 */
+.checked {
+  display: flex;
+  align-items: center;
+  .customCheckbox {
+    display: none;
+  }
+  .customLabel {
+    position: relative;
+    padding-left: 25px; /* 设置标签的左边距，留出空间放置自定义图标 */
+    cursor: pointer;
+    font-size: 12px;
+    color: #666;
+    line-height: 15px;
+  }
+  .customLabel::before {
+    content: '\2713'; /* 创建一个伪元素来绘制自定义的checkbox */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 13px; /* 自定义checkbox的宽度 */
+    height: 13px; /* 自定义checkbox的高度 */
+    border: 1px solid #e5e5e5; /* 边框颜色 */
+    background-color: transparent; /* 背景颜色 */
+    border-radius: 0px; /* 圆角 */
+    text-align: center;
+    line-height: 13px;
+    color: transparent; /* 初始状态下不显示 */
+  }
+  .customCheckbox:checked + .customLabel::before {
+    background-color: #ec4141; /* 选中时的背景颜色 */
+    color: #fff; /* 选中时的文本颜色，以显示勾号 */
+  }
+}
+
+.link {
+  color: #0c73c2;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.register {
+  font-size: 14px;
+  height: 14px;
+  line-height: 14px;
+  margin: 16px 0 36px;
+  color: #333;
+}
+
+.icons {
+  width: 260px;
+  margin: 0 auto 28px;
+  display: flex;
+  justify-content: space-around;
+}

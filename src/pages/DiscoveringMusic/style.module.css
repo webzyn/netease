@@ -1,0 +1,40 @@
+.nav {
+  padding: 23px 0 28px 30px;
+}
+.current {
+  font-size: 20px;
+  font-weight: 900;
+  display: inline-block;
+  height: 20px;
+  line-height: 20px;
+  text-decoration: none;
+  color: #000;
+  margin-right: 20px;
+  position: relative;
+}
+.current::after {
+  display: inline-block;
+  content: ' ';
+  width: calc(100% - 16px);
+  height: 3px;
+  background-color: var(--theme-background);
+  position: absolute;
+  bottom: -8px;
+  left: 8px;
+}
+.base {
+  font-size: 16px;
+  display: inline-block;
+  height: 16px;
+  line-height: 16px;
+  text-decoration: none;
+  color: #000;
+  margin-right: 20px;
+}
+
+.root {
+  min-width: 760px;
+  max-width: 1110px;
+  margin: 0 auto;
+  padding: 0 30px;
+}

@@ -1,11 +1,12 @@
-// 需要登录的api
-import { get, post } from 'request'
+// ! 判断需不需要登录
+import store from 'store'
+import { resource } from 'request/withLoginApi'
+import { personalized } from 'request/withOutLoginApi'
 
-import { ResourceRes } from './types/api'
+const { user } = store.getState()
+const isLogin = user.isLogin
 
-// 获取歌单
-export const resource = (): Promise<ResourceRes> => {
-  return get('/recommend/resource') as Promise<ResourceRes>
+// todo 个性推荐-推荐歌单
+export const getSongSheet = () => {
+  return isLogin ? resource() : personalized()
 }
-
-export default {}

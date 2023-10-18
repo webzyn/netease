@@ -1,10 +1,11 @@
-import { useEffect, useState, useContext } from 'react'
-import PlayerContext from 'context/PlayerContext'
+import React, { useEffect, useState } from 'react'
 
 import { CaretRightOutlined, PauseOutlined, StepBackwardOutlined, StepForwardOutlined } from '@ant-design/icons'
 import { Slider, ConfigProvider } from 'antd'
+import { SliderMarks } from 'antd/es/slider'
 import Icon from 'components/Icon'
 import { PLAY_MODE } from 'constants/enums'
+// import { throttle } from 'lodash'
 import { converTime } from 'utils/utils'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
 
@@ -12,16 +13,23 @@ import { Store } from 'store/types'
 import style from '../../style.module.css'
 
 type IProp = {
+  playing: boolean
+  play: () => void
+  next: () => void
+  prev: () => void
   playMode: string
+  changeMode: () => void
+  getSeek: () => number
+  setSeek: (seek: number, id: number) => void
+  duration: number
+  id: number | undefined
   disabled: boolean
 }
 
 export default function Player(props: IProp) {
-  const { playMode, disabled } = props
-  const { id, seek, getSeek, setSeek, playing, play, next, prev, changeMode } = useContext(PlayerContext)
-
+  const { playing, play, next, prev, playMode, changeMode, id, disabled } = props
   let [Timer, setTimer] = useState<NodeJS.Timer | null>(null)
-  let [silder, setSilder] = useState<number>(Math.ceil(getSeek()))
+  let [silder, setSilder] = useState<number>(Math.ceil(props.getSeek()))
 
   const playList = useSelector((store: Store) => store.playList)
   const currentTrackIndex = playList.currentIndex // 当前播放的歌曲索引
@@ -32,8 +40,9 @@ export default function Player(props: IProp) {
     playList.songs.length > 0 && currentTrackIndex >= 0 ? Math.ceil(playList.songs[currentTrackIndex].dt / 1000) : 0
 
   useEffect(() => {
-    setSilder(Math.ceil(getSeek()))
+    setSilder(Math.ceil(props.getSeek()))
     startTimer()
+
     return () => {
       stopTimer()
     }
@@ -44,7 +53,7 @@ export default function Player(props: IProp) {
     if (playing) {
       // 播放时开启定时器，否则关闭
       const timer = setInterval(() => {
-        setSilder(Math.ceil(getSeek()))
+        setSilder(Math.ceil(props.getSeek()))
       }, 1000)
       setTimer(timer)
     }
@@ -56,7 +65,7 @@ export default function Player(props: IProp) {
   }
 
   const silderChange = (value: number) => {
-    setSeek(value, id as number)
+    props.setSeek(value, props.id as number)
   }
 
   return (

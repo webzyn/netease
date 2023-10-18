@@ -3,14 +3,15 @@ import { createSlice } from '@reduxjs/toolkit'
 import { PLAY_MODE } from 'constants/enums'
 
 import { PlayList } from 'store/types'
-import { Song } from 'types'
+import { Track } from 'types'
 interface SetSongsAction {
   type: string
   payload: {
-    id: number
-    songs: Song[]
+    id: number | string
+    songs: Track[]
   }
 }
+
 interface SetCurrentIndexAction {
   type: string
   payload: number
@@ -51,22 +52,46 @@ export const playListSlice = createSlice({
       //     songs: payload.songs
       //   }
       // }
+      // return state.id === payload.id
+      //   ? state.currentIndex === 0
+      //     ? { ...state, history: [0] }
+      //     : {
+      //         ...state,
+      //         currentIndex: 0,
+      //         history: [0]
+      //       }
+      //   : {
+      //       ...state,
+      //       id: payload.id,
+      //       songs: payload.songs,
+      //       history: [0]
+      //     }
       return state.id === payload.id
-        ? state.currentIndex === 0
-          ? { ...state, history: [0] }
-          : {
-              ...state,
-              currentIndex: 0,
-              state,
-              history: [0]
-            }
+        ? { ...state, history: [] }
         : {
             ...state,
             id: payload.id,
             songs: payload.songs,
-            state,
-            history: [0]
+            history: []
           }
+    },
+    addSongs: (state, action: SetSongsAction) => {
+      if (state.songs.length === 0) {
+        return {
+          ...state,
+          songs: action.payload.songs,
+          currentIndex: 0,
+          id: action.payload.id
+        }
+      } else {
+        let newSongs = action.payload.songs.filter(
+          (item) => state.songs.findIndex((song) => song.id === item.id) === -1
+        )
+        return {
+          ...state,
+          songs: [...state.songs, ...newSongs]
+        }
+      }
     },
     setCurrentIndex: (state, action: SetCurrentIndexAction) => {
       const { type, payload } = action
@@ -168,6 +193,7 @@ export const playListSlice = createSlice({
 
 export const {
   setSongs,
+  addSongs,
   resetPlayList,
   setCurrentIndex,
   setMode,

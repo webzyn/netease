@@ -20,8 +20,6 @@ export const songSheetListSlice = createSlice({
       return payload
     },
     resetSongSheetList: () => {
-      console.log(initialState)
-
       return initialState
     }
   }

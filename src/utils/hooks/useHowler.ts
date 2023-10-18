@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { setCurrentIndex, setPrevCurrentIndex, setVolumn, setMute, setDuration } from 'store/festures/playList'
 import { PLAY_MODE } from 'constants/enums'
 
-import { getSongUrlv1 } from 'request/singleApi'
+import { getSongUrlv1 } from 'request/withOutLoginApi'
 
 import { Store } from 'store/types'
 
@@ -17,14 +17,17 @@ type UseHowlerReturnType = [
   next: () => void,
   prev: () => void,
   assign: (index: number) => void,
+  mute: boolean,
   _setMute: () => void,
-  getvolume: () => number,
+  volume: number,
   setVolume: (volume: number) => void,
   // rate: (rate: number) => void,
+  seek: number,
   getSeek: () => number,
   setSeek: (seek: number, id: number) => void,
   // loop: () => void,
-  duration: () => number
+  duration: () => number,
+  manualPlay: () => void
   // unload: () => void
 ]
 
@@ -61,7 +64,7 @@ export default function useHowler(): UseHowlerReturnType {
     return () => {
       unload()
     }
-  }, [currentTrackIndex, songs, flag])
+  }, [currentTrackIndex, flag, playList.id])
 
   useEffect(() => {
     // 重新绑定，刷新end函数中的 mode
@@ -86,7 +89,6 @@ export default function useHowler(): UseHowlerReturnType {
       autoplay: autoPlay
     })
     setHowl(howl)
-    console.log(howl)
     // 将playing设为true，下次实例自动播放
     setAutoPlay(true)
   }
@@ -227,6 +229,8 @@ export default function useHowler(): UseHowlerReturnType {
     }
   }
 
+  const mute = playList.mute
+
   // 静音、取消静音
   const _setMute = () => {
     howl!.mute(!howl!.mute())
@@ -245,9 +249,7 @@ export default function useHowler(): UseHowlerReturnType {
     dispatch(setMute(howl!.mute()))
   }
 
-  const getvolume = () => {
-    return playList.volumn
-  }
+  const volume = playList.volumn
 
   // 设置速率 0.5-4.0
   const rate = (rate: number) => {
@@ -262,12 +264,10 @@ export default function useHowler(): UseHowlerReturnType {
   //     return howl?.seek()
   //   }
   // }
+  const seek: number = howl ? (howl!.seek() as number) : 0
+
   const getSeek = () => {
-    if (howl) {
-      return howl!.seek() as number
-    } else {
-      return 0
-    }
+    return howl ? (howl!.seek() as number) : 0
   }
 
   const setSeek = (seek: number, id: number) => {
@@ -294,5 +294,26 @@ export default function useHowler(): UseHowlerReturnType {
     setHowl(null)
   }
 
-  return [id, playing, play, next, prev, assign, _setMute, getvolume, setVolume, getSeek, setSeek, duration]
+  // 播放歌曲索引、歌单id改变时能自动播放，其他情况可以调用该接口手动播放
+  const manualPlay = () => {
+    howl && !howl.playing() && howl!.play()
+  }
+
+  return [
+    id,
+    playing,
+    play,
+    next,
+    prev,
+    assign,
+    mute,
+    _setMute,
+    volume,
+    setVolume,
+    seek,
+    getSeek,
+    setSeek,
+    duration,
+    manualPlay
+  ]
 }

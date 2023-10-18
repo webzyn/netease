@@ -10,3 +10,11 @@ export interface QrcodeLoginRef {
 export interface PhoneLoginRef {
   setIsShow: (state: boolean) => void
 }
+
+export interface TabsRef {
+  tabsDiv: HTMLDivElement
+}
+
+export interface DetailHeaderRef {
+  rootDiv: HTMLDivElement
+}

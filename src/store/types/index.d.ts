@@ -10,7 +10,7 @@ export interface User {
 
 export interface PlayList {
   currentIndex: number
-  id: number
+  id: number | string
   songs: Song[]
   mode: string
   history: number[]

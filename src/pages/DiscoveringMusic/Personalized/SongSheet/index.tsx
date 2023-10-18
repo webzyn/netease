@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Item from 'components/Item'
-import useApi from 'utils/hooks/useApi'
+import { getSongSheet } from 'request/api'
 
 import { SongSheet } from 'request/types/common'
 
@@ -8,7 +8,7 @@ import style from './style.module.css'
 
 const PersonalizedSongSheet = () => {
   const [list, setList] = useState<SongSheet[] | []>([])
-  const [getSongSheet] = useApi()
+  // const [getSongSheet] = useApi()
 
   useEffect(() => {
     getList()

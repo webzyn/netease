@@ -17,13 +17,15 @@ import FavoriteMusic from 'pages/myMusic/FavoriteMusic'
 import LocalAndDownload from 'pages/myMusic/LocalAndDownload'
 import RecentlyPlayed from 'pages/myMusic/RecentlyPlayed'
 // 歌单
-import SongSheet from 'pages/SongSheet'
+import SongSheetDetail from 'pages/SongSheetDetail'
 
 const Customization = lazy(() => import('pages/DiscoveringMusic/Customization'))
 const DiscoveringMusicSongSheet = lazy(() => import('pages/DiscoveringMusic/SongSheet'))
 const Rank = lazy(() => import('pages/DiscoveringMusic/Rank'))
 const Singer = lazy(() => import('pages/DiscoveringMusic/Singer'))
 const LatestMusic = lazy(() => import('pages/DiscoveringMusic/LatestMusic'))
+
+const ExcitingComments = lazy(() => import('pages/ExcitingComments'))
 
 const songSheetList = store.getState().songSheetList
 const user = store.getState().user
@@ -50,7 +52,7 @@ if (user.isLogin) {
     return init
   }, [])
   createdPlaylist = createds.map((item) => ({
-    path: 'songSheet',
+    path: 'songSheetDetail',
     name: item.name,
     meta: {
       jump: true,
@@ -62,10 +64,10 @@ if (user.isLogin) {
         id: item.id
       }
     },
-    element: <SongSheet />
+    element: <SongSheetDetail />
   }))
   favoritePlaylist = favorites.map((item) => ({
-    path: 'songSheet',
+    path: 'songSheetDetail',
     name: item.name,
     meta: {
       jump: true,
@@ -77,7 +79,7 @@ if (user.isLogin) {
         id: item.id
       }
     },
-    element: <SongSheet />
+    element: <SongSheetDetail />
   }))
 }
 
@@ -230,7 +232,7 @@ const navMenuList: NavMenuObject[] = [
     },
     children: [
       {
-        path: 'songSheet',
+        path: 'songSheetDetail',
         name: '我喜欢的音乐',
         meta: {
           jump: true,
@@ -244,7 +246,7 @@ const navMenuList: NavMenuObject[] = [
             id: foundSongSheet.id
           }
         },
-        element: <SongSheet />
+        element: <SongSheetDetail />
       },
       {
         path: 'localAndDownload',
@@ -290,6 +292,32 @@ const navMenuList: NavMenuObject[] = [
       collapsible: true
     },
     children: favoritePlaylist
+  },
+  {
+    path: 'songSheetDetail',
+    name: '歌单详情',
+    meta: {
+      jump: true,
+      showNav: false,
+      search: '/:id'
+    },
+    element: <SongSheetDetail />
+  },
+  {
+    path: 'excitingComments',
+    name: '歌单详情',
+    meta: {
+      jump: true,
+      showNav: false,
+      // id : 资源 id
+      // type: 数字 , 资源类型 0: 歌曲 1: mv 2: 歌单 3: 专辑 4: 电台节目 5: 视频 6: 动态 7: 电台
+      search: '/:id/:type'
+    },
+    element: (
+      <Suspense fallback={<>加载中...</>}>
+        <ExcitingComments />
+      </Suspense>
+    )
   }
 ]
 export default navMenuList

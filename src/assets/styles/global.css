@@ -1,3 +1,27 @@
 :root {
+  /* !主题 */
   --theme-background: #ec4141;
+
+  /* !背景 */
+  --background-first-color: #fff;
+  --background-second-color: #f2f2f2;
+  --background-third-color: #d9d9d9;
+
+  /* !禁用文字 */
+  --disabled-text-color: #b2b2b2;
+
+  /* !文字颜色 */
+  --text-primary-color: #333;
+  --text-second-color: #666;
+  --text-third-color: #888;
+  --text-link-color: #507daf;
+  --text-link-hover-color: #366ca9;
 }
+/* :global(.ant-btn) {
+  background-color: var(--theme-background);
+  border-radius: 16px;
+}
+:global(.ant-btn):hover {
+  background-color: var(--theme-background) !important;
+  filter: brightness(1.2); 通过滤镜调整亮度 
+} */

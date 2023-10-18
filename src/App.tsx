@@ -3,9 +3,10 @@ import Footer from 'components/Layout/Footer'
 import Container from 'components/Layout/Container'
 import Nav from 'components/Layout/Nav'
 import Main from 'components/Layout/Main'
+import Player from 'components/Player'
 
 import { get } from 'request'
-import { useEffect } from 'react'
+import { useEffect, createContext } from 'react'
 
 import { useDispatch } from 'react-redux/es/exports'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
@@ -21,6 +22,8 @@ interface Result {
   version: string
 }
 
+// const MyContext = createContext({})
+
 function App() {
   const user = useSelector((store: any) => store.user)
   const dispatch = useDispatch()
@@ -29,6 +32,7 @@ function App() {
     getPlayList()
   }, [])
 
+  // 我的歌单
   const getPlayList = async () => {
     if (user.isLogin) {
       const res: Result = (await get('/user/playlist', { uid: user.id })) as Result
@@ -41,12 +45,14 @@ function App() {
   }
   return (
     <div className='App'>
-      <Header />
-      <Container>
-        <Nav />
-        <Main />
-      </Container>
-      <Footer />
+      <Player>
+        <Header />
+        <Container>
+          <Nav />
+          <Main />
+        </Container>
+        <Footer />
+      </Player>
     </div>
   )
 }

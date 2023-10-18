@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import PlayerContext from 'context/PlayerContext'
 
 import { MenuOutlined, LinkOutlined } from '@ant-design/icons'
 import { Popover, Space, Slider, ConfigProvider, Drawer, Table } from 'antd'
@@ -13,24 +14,16 @@ import { converTime } from 'utils/utils'
 import style from '../../style.module.css'
 
 import type { ColumnsType } from 'antd/es/table'
-import { Song } from 'types'
+import { Track } from 'types'
 import { Store } from 'store/types'
 interface SongListDrawerIProp {
   open: boolean
   onClose: () => void
-  assign: (index: number) => void
-}
-interface IProp {
-  volume: number
-  setVolume: (volumn: number) => void
-  setMute: () => void
-  mute: boolean
-  assign: (index: number) => void
 }
 
 export const SongListDrawer: React.FC<SongListDrawerIProp> = (props) => {
+  const { assign, cleanSongList } = useContext(PlayerContext)
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const playList = useSelector((store: Store) => store.playList)
   const songs = playList.songs
   const songsId = playList.id
@@ -40,7 +33,6 @@ export const SongListDrawer: React.FC<SongListDrawerIProp> = (props) => {
   const [hoverIndex, setHoverIndex] = useState(-1)
 
   const goSinger = (id: number) => {
-    console.log(id)
     alert('歌手详情' + id)
   }
 
@@ -53,12 +45,7 @@ export const SongListDrawer: React.FC<SongListDrawerIProp> = (props) => {
     navigate('/discoveringMusic/personalized')
   }
 
-  const cleanSongList = () => {
-    dispatch(resetPlayList())
-    console.log('cleanSongList')
-  }
-
-  const columns: ColumnsType<Song> = [
+  const columns: ColumnsType<Track> = [
     {
       dataIndex: 'name',
       key: 'name',
@@ -74,7 +61,9 @@ export const SongListDrawer: React.FC<SongListDrawerIProp> = (props) => {
           >
             {text}
           </span>
-          {record.alia[0] && <span style={{ color: '#ccc', cursor: 'default' }}>({record.alia[0]})</span>}
+          {record.tns && record.tns.length > 0 && (
+            <span style={{ color: '#969696', cursor: 'default' }}>({record.tns.join('/')})</span>
+          )}{' '}
         </span>
       )
     },
@@ -111,6 +100,7 @@ export const SongListDrawer: React.FC<SongListDrawerIProp> = (props) => {
       key: 'dt',
       ellipsis: true,
       width: '25%',
+      align: 'center',
       render: (text, record, index) => (
         <span>
           <LinkOutlined
@@ -171,7 +161,7 @@ export const SongListDrawer: React.FC<SongListDrawerIProp> = (props) => {
                 return {
                   onClick: (event) => {}, // 点击行
                   onDoubleClick: (event) => {
-                    props.assign(index as number)
+                    assign(index as number)
                   },
                   onContextMenu: (event) => {},
                   onMouseEnter: (event) => {
@@ -200,7 +190,8 @@ export const SongListDrawer: React.FC<SongListDrawerIProp> = (props) => {
   )
 }
 
-export default function Oper(props: IProp) {
+export default function Oper() {
+  const { assign, volume, setVolume, mute, setMute } = useContext(PlayerContext)
   const [open, setOpen] = useState(false)
 
   const showDrawer = () => {
@@ -247,14 +238,14 @@ export default function Oper(props: IProp) {
         }}
       >
         <Slider
-          defaultValue={props.volume}
+          defaultValue={volume}
           min={0}
           max={1}
           step={0.01}
           vertical
           style={{ margin: 0 }}
           tooltip={{ formatter: null }}
-          onAfterChange={(value) => props.setVolume(value)}
+          onAfterChange={(value) => setVolume(value)}
         />
       </ConfigProvider>
     </div>
@@ -264,11 +255,11 @@ export default function Oper(props: IProp) {
       <div className={style.label}>标准</div>
       <Icon type='icon-yinxiao' style={{ fontSize: '19px', paddingLeft: '20px', cursor: 'pointer' }}></Icon>
 
-      {!props.mute ? (
+      {!mute ? (
         <Space wrap style={{ paddingLeft: '20px' }}>
           <Popover content={content} trigger='hover'>
             <span>
-              <span onClick={() => props.setMute()}>
+              <span onClick={() => setMute()}>
                 <Icon type='icon-shengyin' style={{ fontSize: '20px', cursor: 'pointer' }}></Icon>
               </span>
             </span>
@@ -278,7 +269,7 @@ export default function Oper(props: IProp) {
         <Space wrap style={{ paddingLeft: '14px' }}>
           <Popover content={content} trigger='hover'>
             <span>
-              <span onClick={() => props.setMute()}>
+              <span onClick={() => setMute()}>
                 <Icon type='icon-jingyin' style={{ fontSize: '26px', cursor: 'pointer' }}></Icon>
               </span>
             </span>
@@ -291,7 +282,7 @@ export default function Oper(props: IProp) {
         onClick={() => setOpen(!open)}
       />
       <>
-        <SongListDrawer open={open} onClose={onClose} assign={props.assign} />
+        <SongListDrawer open={open} onClose={onClose} />
       </>
     </div>
   )

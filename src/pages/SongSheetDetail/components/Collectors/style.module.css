@@ -1,0 +1,50 @@
+.wrap {
+  display: flex;
+  align-items: center;
+}
+.img {
+  width: 90px;
+  height: 90px;
+  border: 1px solid #e9e9e9;
+  border-radius: 50%;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-right: 10px;
+  cursor: pointer;
+  .img {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+.info {
+  color: var(--text-primary-color);
+  flex: 1;
+  width: 0;
+
+  .nickname {
+    margin-bottom: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    .iconBox {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #bff3ff;
+      margin-left: 5px;
+    }
+  }
+  .signature {
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}

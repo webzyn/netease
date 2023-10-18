@@ -1,37 +1,26 @@
-// 歌单中的歌曲对象
-export interface Song {
-  id: number
-  name: string
-  mv: number
-  publishTime: number
-  dt: number
-  al: {
-    id: number
-    name: string
-    pic: number
-    picUrl: string
-    pic_str: string
-    tns: any[]
-  }
-  alia: string[]
-  ar: {
-    id: number
-    name: string
-    tns: any[]
-    alias: any[]
-  }[]
-  [key]: any
-}
-// 歌单中的歌曲对象 -> 包含歌曲url
-export interface SongUrl {
-  id: number
-  url: string
-  type: string
-  encodeType: string
-  level: string
-  size: number
-  time: number
-  flag: number
-  md5: number
-  [key]: any
-}
+import Track from './Track'
+import User from './User'
+import TrackId from './TrackId'
+import SongUrl from './SongUrl'
+import Privilege from './Privilege'
+import PlayList from './Playlist'
+import Comment from './Comment'
+
+export type PlayList = PlayList
+
+// todo歌单中的歌曲对象
+export type Track = Track
+
+export type Privilege = Privilege
+
+// todo 歌曲id
+export type TrackId = TrackId
+
+// todo歌单中的歌曲对象 -> 包含歌曲url
+export type SongUrl = SongUrl
+
+// todo 用户信息
+export type User = User
+
+// todo 歌单评论
+export type Comment = Comment

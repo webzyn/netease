@@ -5,6 +5,7 @@ import SongUrl from './SongUrl'
 import Privilege from './Privilege'
 import PlayList from './Playlist'
 import Comment from './Comment'
+import { PlaylistTag, HotPlaylistTag, Categories } from './playlistTag'
 
 export type PlayList = PlayList
 
@@ -24,3 +25,8 @@ export type User = User
 
 // todo 歌单评论
 export type Comment = Comment
+
+// ! 歌单分类tag
+export type PlaylistTag = PlaylistTag
+export type HotPlaylistTag = HotPlaylistTag
+export type Categories = Categories

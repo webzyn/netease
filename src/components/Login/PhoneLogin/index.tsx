@@ -101,8 +101,6 @@ const PhoneLogin = forwardRef((props: IProps, ref: ForwardedRef<PhoneLoginRef>) 
       setHaveVerify(true)
       const timer = setInterval(() => {
         setCountdown((prevCountdown) => {
-          console.log(prevCountdown)
-
           if (prevCountdown > 1) {
             return prevCountdown - 1
           } else {

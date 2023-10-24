@@ -9,12 +9,23 @@ import {
   SongDetailRes,
   SubscribersRes,
   CommentOfPlaylistRes,
-  CommentHotRes
+  CommentHotRes,
+  PlayListCatlistRes,
+  PlayListHotRes,
+  TopPlaylistRes,
+  TopPlayListHighqualityRes,
+  HighqualityTagsRes,
+  TopListRes
 } from './types/singleApi'
 
 // todo 获取歌单
 export const personalized = (): Promise<PersonalizedRes> => {
   return get('personalized') as Promise<PersonalizedRes>
+}
+
+// todo 推荐新音乐
+export const getNewSong = () => {
+  return get('/personalized/newsong', { limit: 12 })
 }
 
 // todo 获取歌单所有歌曲
@@ -90,4 +101,50 @@ export const getSongDetail = (ids: number | string): Promise<SongDetailRes> => {
 // export const getArtistDetail = (id: number | string): Promise<SongSheetDetailRes> => {
 //   return get('/artist/detail', { id }) as Promise<SongSheetDetailRes>
 // }
-export default {}
+
+// ! 歌单分类
+export const getPlayListCatlist = (): Promise<PlayListCatlistRes> => {
+  return get('/playlist/catlist') as Promise<PlayListCatlistRes>
+}
+
+// ! 热门歌单分类
+export const getPlayListHot = (): Promise<PlayListHotRes> => {
+  return get('/playlist/hot') as Promise<PlayListHotRes>
+}
+
+// ! 歌单列表
+export const getTopPlaylist = (
+  cat: string,
+  pageSize: number,
+  page: number,
+  order?: 'hot' | 'new'
+): Promise<TopPlaylistRes> => {
+  return get('/top/playlist', {
+    cat,
+    limit: pageSize,
+    offset: (page - 1) * pageSize,
+    order
+  }) as Promise<TopPlaylistRes>
+}
+
+// ! 精品歌单标签列表
+export const getHighqualityTags = (): Promise<HighqualityTagsRes> => {
+  return get('/playlist/highquality/tags') as Promise<HighqualityTagsRes>
+}
+
+// ! 获取精品歌单
+// 可选参数 : cat: tag, 比如 " 华语 "、" 古风 " 、" 欧美 "、" 流行 ", 默认为 "全部"
+// limit: 取出歌单数量 , 默认为 50
+// before: 分页参数,取上一页最后一个歌单的 updateTime 获取下一页数据
+export const getTopPlayListHighquality = (
+  cat?: string,
+  limit?: number,
+  before?: number
+): Promise<TopPlayListHighqualityRes> => {
+  return get('/top/playlist/highquality', { cat, limit, before }) as Promise<TopPlayListHighqualityRes>
+}
+
+// todo 所有榜单
+export const getTopList = (): Promise<TopListRes> => {
+  return get('/toplist') as Promise<TopListRes>
+}

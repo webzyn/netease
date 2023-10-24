@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import CommentList from 'components/commentList'
 import { commentLike, comment, deleteComment } from 'request/withLoginApi'
 import { getCommentOfPlaylist } from 'request/withOutLoginApi'
+import useJump from 'utils/hooks/useJump'
 
 import { Input, Pagination, Button, message } from 'antd'
 
@@ -16,14 +17,14 @@ const { TextArea } = Input
 
 export default function CommentCom() {
   const { id } = useParams()
-  const navigate = useNavigate()
   const [page, setPage] = useState<number>(1)
-  const [total, setTotal] = useState<number>()
+  const [total, setTotal] = useState<number>(0)
   const [hotComments, setHotComments] = useState<Comment[]>([])
   const [comments, setComments] = useState<Comment[]>([])
   const [textAreaValue, setTextAreaValue] = useState<string>('')
   const [replyText, setReplyText] = useState<string>('')
   const [commentId, setCommentId] = useState<number>(-1)
+  const { goExcitingComments } = useJump()
 
   useEffect(() => {
     getData()
@@ -56,7 +57,7 @@ export default function CommentCom() {
   }
 
   const more = () => {
-    navigate(`/excitingComments/${id}/${2}`)
+    goExcitingComments(id as string, 2)
   }
 
   const onChange = (page: number, pageSize: number) => {
@@ -148,7 +149,7 @@ export default function CommentCom() {
           </div>
         </>
       )}
-      {comments && comments.length > 0 && (
+      {total > 0 && (
         <>
           <div className={style.title}>最新评论({total})</div>
           <CommentList
@@ -159,7 +160,7 @@ export default function CommentCom() {
             onDelete={onDelete}
           ></CommentList>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            {comments.length > 60 && (
+            {total > 60 && (
               <Pagination
                 className={custom.pagination}
                 size='small'

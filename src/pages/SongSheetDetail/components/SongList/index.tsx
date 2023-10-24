@@ -29,7 +29,6 @@ export default function SongList(props: IProp) {
   let { id } = useParams()
 
   const goSinger = (id: number) => {
-    console.log(id)
     alert('歌手详情' + id)
   }
 

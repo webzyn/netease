@@ -26,6 +26,7 @@ const Singer = lazy(() => import('pages/DiscoveringMusic/Singer'))
 const LatestMusic = lazy(() => import('pages/DiscoveringMusic/LatestMusic'))
 
 const ExcitingComments = lazy(() => import('pages/ExcitingComments'))
+const Highquality = lazy(() => import('pages/Highquality'))
 
 const songSheetList = store.getState().songSheetList
 const user = store.getState().user
@@ -305,7 +306,7 @@ const navMenuList: NavMenuObject[] = [
   },
   {
     path: 'excitingComments',
-    name: '歌单详情',
+    name: '歌单',
     meta: {
       jump: true,
       showNav: false,
@@ -316,6 +317,20 @@ const navMenuList: NavMenuObject[] = [
     element: (
       <Suspense fallback={<>加载中...</>}>
         <ExcitingComments />
+      </Suspense>
+    )
+  },
+  {
+    path: 'highquality',
+    name: '精品歌单',
+    meta: {
+      jump: true,
+      showNav: false,
+      search: '/:cat'
+    },
+    element: (
+      <Suspense fallback={<>加载中...</>}>
+        <Highquality />
       </Suspense>
     )
   }

@@ -1,9 +1,6 @@
 import React, { Component, useEffect, useState, useContext, useRef } from 'react'
-import { Ref } from 'react'
 import PlayerContext from 'context/PlayerContext'
 import { useParams } from 'react-router-dom'
-
-import { useSelector } from 'react-redux/es/hooks/useSelector'
 
 import { getSongSheetDetail, getSongDetail } from 'request/withOutLoginApi'
 

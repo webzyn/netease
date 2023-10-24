@@ -1,0 +1,99 @@
+.tags {
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tag {
+  font-size: 12px;
+  padding: 2px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--text-second-color);
+}
+.tag:hover {
+  color: var(--text-primary-color);
+}
+.tag_checked {
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 12px;
+  border-radius: 12px;
+  color: var(--theme-background);
+  background-color: var(--theme-background-hover) !important;
+}
+
+.list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.item {
+  margin-right: 18px;
+  width: calc((100% - 55px) / 4);
+}
+.item:nth-child(4n) {
+  margin-right: 0;
+}
+
+.pvpover_tags {
+  width: 745px;
+  height: 745px;
+  font-size: 12px;
+  .header {
+    height: 55px;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+  }
+
+  .content {
+    margin: 35px 0;
+    color: #ccc;
+    display: flex;
+    .categorie {
+      width: 125px;
+      padding-left: 20px;
+      box-sizing: border-box;
+    }
+    .other {
+      flex: 1;
+      .otherTagBox {
+        display: inline-block;
+        width: 100px;
+        height: 40px;
+      }
+    }
+  }
+
+  .tag {
+    font-size: 14px;
+    padding: 7px 12px 10px;
+    border-radius: 24px;
+    cursor: pointer;
+    color: var(--text-second-color);
+  }
+  .tag:hover {
+    color: var(--text-primary-color);
+  }
+  .tag_checked {
+    cursor: pointer;
+    font-size: 14px;
+    padding: 7px 12px 10px;
+    border-radius: 24px;
+    color: var(--theme-background);
+    background-color: var(--theme-background-hover) !important;
+  }
+  .hot {
+    font-size: 20px;
+    color: var(--theme-background);
+    display: inline-block;
+    transform: scale(0.4);
+    font-weight: 700;
+    position: absolute;
+    top: -2px;
+    right: -18px;
+  }
+}

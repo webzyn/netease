@@ -7,7 +7,7 @@ import { SongSheet } from 'request/types/common'
 import style from './style.module.css'
 
 const PersonalizedSongSheet = () => {
-  const [list, setList] = useState<SongSheet[] | []>([])
+  const [list, setList] = useState<SongSheet[]>([])
   // const [getSongSheet] = useApi()
 
   useEffect(() => {
@@ -31,7 +31,14 @@ const PersonalizedSongSheet = () => {
       <div className={style.wrapper}>
         {list.map((item) => (
           <div className={style.item} key={item.id}>
-            <Item id={item.id} picUrl={item.picUrl} name={item.name} playcount={item.playcount} alg={item.alg}></Item>
+            <Item
+              key={item.id}
+              id={item.id}
+              picUrl={item.picUrl}
+              name={item.name}
+              playcount={item.playcount}
+              alg={item.alg}
+            ></Item>
           </div>
         ))}
       </div>

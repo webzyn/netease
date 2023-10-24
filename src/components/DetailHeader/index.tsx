@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { useParams } from 'react-router-dom'
 
 import dayjs from 'utils/dayjs'
@@ -30,10 +29,9 @@ const DetailHeader = React.forwardRef((props: IProp, ref: React.ForwardedRef<Det
   const { id } = useParams()
   const {
     playlist,
-    playlist: { creator },
-    addPlayList,
-    changeSongSheet
+    playlist: { creator }
   } = props.detail
+  const { addPlayList, changeSongSheet } = props
   const rootRef = React.useRef<HTMLDivElement>()
   const [subscribed, setSubscribed] = useState(playlist.subscribed)
   React.useImperativeHandle(ref, () => {

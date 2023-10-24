@@ -23,7 +23,7 @@ const Icon: React.FC<IProp> = ({ type, style, className }) => {
     ...style
   }
   const MyIcon = createFromIconfontCN({
-    scriptUrl: '//at.alicdn.com/t/c/font_4252679_jd3chn7adj.js', // 在 iconfont.cn 上生成
+    scriptUrl: '//at.alicdn.com/t/c/font_4252679_ticwfealw.js', // 在 iconfont.cn 上生成
     extraCommonProps: {
       className,
       style: mergedStyle

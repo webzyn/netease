@@ -78,7 +78,6 @@ class DeployableMenu extends Component<IProp, IState> {
   }
 
   addSongSheet = (e: MouseEvent<HTMLSpanElement>) => {
-    console.log(e)
     e.stopPropagation()
 
     // 添加歌单

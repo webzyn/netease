@@ -18,6 +18,6 @@ export default interface PlayList {
   tags: string[] // 标签
   commentCount: number // 评论数
   commentThreadId: string // 评论id
-  trialMode: number // 10 我喜欢的音乐 11 创建的歌单 12 收藏的歌单
+  trialMode?: number // 10 我喜欢的音乐 11 创建的歌单 12 收藏的歌单
   [key: string]: any
 }

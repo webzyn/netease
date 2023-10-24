@@ -1,5 +1,16 @@
 import { SongSheet } from './common'
-import { Track, SongUrl, User, TrackId, PlayList, Privilege, Comment } from 'types'
+import {
+  Track,
+  SongUrl,
+  User,
+  TrackId,
+  PlayList,
+  Privilege,
+  Comment,
+  HotPlaylistTag,
+  Categories,
+  PlaylistTag
+} from 'types'
 
 export interface PersonalizedRes {
   category?: number
@@ -62,4 +73,55 @@ export interface CommentHotRes {
   hotComments: Comment[]
   topComments: Comment[]
   total: number
+}
+
+// ! 歌单分类
+export interface PlayListCatlistRes {
+  code: number
+  all: PlaylistTag
+  categories: Categories
+  sub: PlaylistTag[]
+}
+
+// ! 热门歌单分类
+export interface PlayListHotRes {
+  code: number
+  tags: HotPlaylistTag[]
+}
+
+// ! 歌单列表
+export interface TopPlaylistRes {
+  cat: string
+  code: number
+  more: boolean
+  total: number
+  playlists: PlayList[]
+}
+
+// ! 精品歌单
+export interface TopPlayListHighqualityRes {
+  code: number
+  lasttime: number
+  more: boolean
+  total: number
+  playlists: PlayList[]
+}
+
+//  ! 精品歌单分类tag
+export interface HighqualityTagsRes {
+  code: number
+  tags: HotPlaylistTag[]
+}
+
+// todo 排行榜
+export interface TopListRes {
+  code: number
+  list: PlayList[]
+  artistToplist: {
+    coverUrl: string
+    name: string
+    position: number
+    upateFrequency: string
+    updateFrequency: string
+  }
 }

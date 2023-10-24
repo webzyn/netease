@@ -13,12 +13,11 @@ export default function DiscoveringMusic() {
 
   useEffect(() => {
     const menuList = navMenuList.find((menu) => menu.path === 'discoveringMusic' && menu.children)!.children
-    console.log(menuList)
     setMenuList(menuList as NavMenuObject[])
     navigate('personalized') // 跳转到personalized
   }, [])
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       <div className={style.nav}>
         {menuList.map((menu) => {
           return (
@@ -32,8 +31,10 @@ export default function DiscoveringMusic() {
           )
         })}
       </div>
-      <div className={style.root}>
-        <Outlet></Outlet>
+      <div className={style.root_wrap}>
+        <div className={style.root}>
+          <Outlet></Outlet>
+        </div>
       </div>
     </div>
   )

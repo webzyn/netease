@@ -1,35 +1,25 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { CaretRightFilled, CaretRightOutlined } from '@ant-design/icons'
+import React, { useState } from 'react'
+import { CaretRightFilled, CaretRightOutlined, UserOutlined } from '@ant-design/icons'
 import { IProps } from './types'
 import style from './style.module.css'
-import { trackAll } from 'request/withOutLoginApi'
 
 import { converUnits } from 'utils/utils'
-import PlayerContext from 'context/PlayerContext'
+import useJump from 'utils/hooks/useJump'
+import usePlayer from 'utils/hooks/usePlayer'
 
 export default function Item(props: IProps) {
-  const navigate = useNavigate()
   const [isHover, setIsHover] = useState(false)
 
-  const { changeSongSheet } = useContext(PlayerContext)
+  const { goSongSheetDetail } = useJump()
+  const { setPlaylist } = usePlayer()
 
   const mouse = (state: boolean) => {
     setIsHover(state)
   }
 
-  // 将歌单中歌曲存入store
-  const getPlaylist = (id: number, e: React.MouseEvent) => {
+  const play = (e: React.MouseEvent) => {
     e.stopPropagation()
-    trackAll(id).then((res) => {
-      if (res.code === 200) {
-        changeSongSheet(id, res.songs)
-      }
-    })
-  }
-
-  const goSongSheetDetail = () => {
-    navigate(`/songSheetDetail/${props.id}`)
+    setPlaylist(props.id)
   }
 
   return (
@@ -38,16 +28,22 @@ export default function Item(props: IProps) {
         className={style.pic}
         onMouseEnter={() => mouse(true)}
         onMouseLeave={() => mouse(false)}
-        onClick={goSongSheetDetail}
+        onClick={() => goSongSheetDetail(props.id)}
       >
         <img src={props.picUrl} style={{ width: '100%', height: '100%', borderRadius: '4px' }} />
         <span className={style.count}>
           <CaretRightFilled />
           {converUnits(props.playcount)}
         </span>
+        {props.nickname && (
+          <span className={style.nickname}>
+            <UserOutlined style={{ fontSize: '13px', marginRight: '2px' }} />
+            {props.nickname}
+          </span>
+        )}
         {props.alg === 'byplaylist_play_profile_swing' && <div className={style.mask}></div>}
         {isHover && (
-          <div className={style.circle} onClick={(e) => getPlaylist(props.id, e)}>
+          <div className={style.circle} onClick={play}>
             <CaretRightOutlined
               style={{
                 fontSize: '24px',
@@ -61,7 +57,7 @@ export default function Item(props: IProps) {
         )}
       </div>
       <div className={style.name}>
-        <span style={{ cursor: 'pointer' }} onClick={goSongSheetDetail}>
+        <span style={{ cursor: 'pointer' }} onClick={() => goSongSheetDetail(props.id)}>
           {props.name}
         </span>
       </div>

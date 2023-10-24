@@ -1,6 +1,7 @@
 :root {
   /* !主题 */
-  --theme-background: #ec4141;
+  --theme-background: rgba(236, 65, 65, 1);
+  --theme-background-hover: rgba(236, 65, 65, 0.2);
 
   /* !背景 */
   --background-first-color: #fff;

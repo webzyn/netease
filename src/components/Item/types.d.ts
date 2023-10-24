@@ -6,4 +6,5 @@ export interface IProps {
   describe?: string
   size?: string // 图片大小
   alg: string
+  nickname?: string
 }

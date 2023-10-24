@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { LeftOutlined, RightOutlined, SearchOutlined, UserOutlined, CaretDownOutlined } from '@ant-design/icons'
 import { ConfigProvider, Input } from 'antd'
 
@@ -22,49 +23,48 @@ class HeaderLeft extends Component {
 }
 
 // *Left组件
-class Left extends Component {
-  render() {
-    return (
-      <div className={style.contnet_left}>
-        <div className={style.circle}>
-          <LeftOutlined style={{ fontSize: '12px', color: 'rgba(255,255,255,0.8)' }} />
-        </div>
-        <div className={style.circle}>
-          <RightOutlined style={{ fontSize: '12px', color: 'rgba(255,255,255,0.8)' }} />
-        </div>
-        {/* 局部主题配置 */}
-        <ConfigProvider
-          theme={{
-            token: {
-              colorBgContainer: 'transparent',
-              colorBorder: 'transparent',
-              borderRadius: 16,
-              colorTextPlaceholder: '#ED9999',
-              colorText: '#ffffff',
-              fontSize: 12
-            },
-            components: {
-              Input: {
-                hoverBorderColor: 'transparent',
-                activeBorderColor: 'transparent',
-                controlOutline: 'transparent'
-              }
-            }
-          }}
-        >
-          <Input
-            className={style.searchInput}
-            placeholder='林俊杰'
-            bordered={false}
-            prefix={<SearchOutlined style={{ fontSize: '14px', color: 'rgba(255,255,255,0.8)' }} />}
-          />
-        </ConfigProvider>
-        <div className={style.bigCircle}>
-          <Icon type='icon-huatong' style={{ color: 'red' }}></Icon>
-        </div>
+const Left = () => {
+  const navigate = useNavigate()
+  return (
+    <div className={style.contnet_left}>
+      <div className={style.circle} onClick={() => navigate(-1)}>
+        <LeftOutlined style={{ fontSize: '12px', color: 'rgba(255,255,255,0.8)' }} />
       </div>
-    )
-  }
+      <div className={style.circle} onClick={() => navigate(1)}>
+        <RightOutlined style={{ fontSize: '12px', color: 'rgba(255,255,255,0.8)' }} />
+      </div>
+      {/* 局部主题配置 */}
+      <ConfigProvider
+        theme={{
+          token: {
+            colorBgContainer: 'transparent',
+            colorBorder: 'transparent',
+            borderRadius: 16,
+            colorTextPlaceholder: '#ED9999',
+            colorText: '#ffffff',
+            fontSize: 12
+          },
+          components: {
+            Input: {
+              hoverBorderColor: 'transparent',
+              activeBorderColor: 'transparent',
+              controlOutline: 'transparent'
+            }
+          }
+        }}
+      >
+        <Input
+          className={style.searchInput}
+          placeholder='林俊杰'
+          bordered={false}
+          prefix={<SearchOutlined style={{ fontSize: '14px', color: 'rgba(255,255,255,0.8)' }} />}
+        />
+      </ConfigProvider>
+      <div className={style.bigCircle}>
+        <Icon type='icon-huatong' style={{ color: 'red' }}></Icon>
+      </div>
+    </div>
+  )
 }
 
 // !Right组件

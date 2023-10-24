@@ -17,6 +17,7 @@
     "axios": "^1.5.0",
     "dayjs": "^1.11.10",
     "howler": "^2.2.4",
+    "js-base64": "^3.7.5",
     "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
     "rc-picker": "^3.14.5",

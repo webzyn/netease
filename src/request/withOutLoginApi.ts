@@ -15,7 +15,10 @@ import {
   TopPlaylistRes,
   TopPlayListHighqualityRes,
   HighqualityTagsRes,
-  TopListRes
+  TopListRes,
+  TopSongRes,
+  NewAlbumRes,
+  AlbumRes
 } from './types/singleApi'
 
 // todo 获取歌单
@@ -147,4 +150,32 @@ export const getTopPlayListHighquality = (
 // todo 所有榜单
 export const getTopList = (): Promise<TopListRes> => {
   return get('/toplist') as Promise<TopListRes>
+}
+
+// ! 新歌速递
+// type: 地区类型 id  全部:0  华语:7  欧美:96 日本:8  韩国:16
+export const getTopSong = (type = 0): Promise<TopSongRes> => {
+  return get('/top/song', { type }) as Promise<TopSongRes>
+}
+
+// ! 全部新碟
+// limit : 返回数量 , 默认为 30
+// offset : 偏移数量，用于分页 , 如 :( 页数 -1)*30, 其中 30 为 limit 的值 , 默认为 0
+// area : ALL:全部,ZH:华语,EA:欧美,KR:韩国,JP:日本
+export const getnewAlbum = (area = 'ALL', page = 1, limit = 16): Promise<NewAlbumRes> => {
+  return get('/album/new', {
+    area,
+    offset: (page - 1) * limit,
+    limit
+  }) as Promise<NewAlbumRes>
+}
+
+// todo 专辑中的歌曲
+export const getAlbum = (id: number | string): Promise<AlbumRes> => {
+  return get('/album', { id }) as Promise<AlbumRes>
+}
+
+//  todo 专辑动态信息
+export const getAlbumDetailDynamic = (id: number | string): Promise<any> => {
+  return get('/album/detail/dynamic', { id })
 }

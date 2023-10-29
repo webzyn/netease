@@ -1,17 +1,21 @@
 import React, { useState } from 'react'
 import { CaretRightFilled, CaretRightOutlined, UserOutlined } from '@ant-design/icons'
-import { IProps } from './types'
 import style from './style.module.css'
 
 import { converUnits } from 'utils/utils'
 import useJump from 'utils/hooks/useJump'
 import usePlayer from 'utils/hooks/usePlayer'
 
-export default function Item(props: IProps) {
-  const [isHover, setIsHover] = useState(false)
+import { PlayList } from 'types'
+export interface IProps {
+  playList: PlayList
+}
 
+export default function GlobalRank(props: IProps) {
+  const [isHover, setIsHover] = useState(false)
   const { goSongSheetDetail } = useJump()
   const { setPlaylist } = usePlayer()
+  const { playList } = props
 
   const mouse = (state: boolean) => {
     setIsHover(state)
@@ -19,7 +23,7 @@ export default function Item(props: IProps) {
 
   const play = (e: React.MouseEvent) => {
     e.stopPropagation()
-    setPlaylist(props.id)
+    setPlaylist(playList.id)
   }
 
   return (
@@ -28,17 +32,17 @@ export default function Item(props: IProps) {
         className={style.pic}
         onMouseEnter={() => mouse(true)}
         onMouseLeave={() => mouse(false)}
-        onClick={() => goSongSheetDetail(props.id)}
+        onClick={() => goSongSheetDetail(playList.id)}
       >
-        <img src={props.picUrl} style={{ width: '100%', height: '100%', borderRadius: '4px' }} />
+        <img src={playList.coverImgUrl} style={{ width: '100%', height: '100%', borderRadius: '4px' }} />
         <span className={style.count}>
           <CaretRightFilled />
-          {converUnits(props.playCount)}
+          {converUnits(playList.playCount)}
         </span>
-        {props.nickname && (
+        {playList.nickname && (
           <span className={style.nickname}>
             <UserOutlined style={{ fontSize: '13px', marginRight: '2px' }} />
-            {props.nickname}
+            {playList.nickname}
           </span>
         )}
         <div className={style.mask}></div>
@@ -57,8 +61,8 @@ export default function Item(props: IProps) {
         )}
       </div>
       <div className={style.name}>
-        <span style={{ cursor: 'pointer' }} onClick={() => goSongSheetDetail(props.id)}>
-          {props.name}
+        <span style={{ cursor: 'pointer' }} onClick={() => goSongSheetDetail(playList.id)}>
+          {playList.name}
         </span>
       </div>
     </div>

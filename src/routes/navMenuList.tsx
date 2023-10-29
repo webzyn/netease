@@ -27,6 +27,7 @@ const LatestMusic = lazy(() => import('pages/DiscoveringMusic/LatestMusic'))
 
 const ExcitingComments = lazy(() => import('pages/ExcitingComments'))
 const Highquality = lazy(() => import('pages/Highquality'))
+const AlbumDetail = lazy(() => import('pages/AlbumDetail'))
 
 const songSheetList = store.getState().songSheetList
 const user = store.getState().user
@@ -331,6 +332,20 @@ const navMenuList: NavMenuObject[] = [
     element: (
       <Suspense fallback={<>加载中...</>}>
         <Highquality />
+      </Suspense>
+    )
+  },
+  {
+    path: 'albumDetail',
+    name: '专辑详细',
+    meta: {
+      jump: true,
+      showNav: false,
+      search: '/:id'
+    },
+    element: (
+      <Suspense fallback={<>加载中...</>}>
+        <AlbumDetail />
       </Suspense>
     )
   }

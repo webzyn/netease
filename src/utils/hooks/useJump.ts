@@ -20,5 +20,10 @@ export default function useJump() {
     navigate(`/songSheetDetail/${id}`)
   }
 
-  return { goExcitingComments, goHighquality, goSongSheetDetail }
+  // 跳转到专辑详情
+  const goAlbumDetail = (id: number) => {
+    navigate(`/albumDetail/${id}`)
+  }
+
+  return { goExcitingComments, goHighquality, goSongSheetDetail, goAlbumDetail }
 }

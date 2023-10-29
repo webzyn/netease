@@ -5,17 +5,11 @@ import { Button, Pagination, Popover } from 'antd'
 import { RightOutlined } from '@ant-design/icons'
 import Highquality from './components/Highquality'
 
-import {
-  getPlayListCatlist,
-  getPlayListHot,
-  getTopPlaylist,
-  getTopList,
-  getHighqualityTags
-} from 'request/withOutLoginApi'
+import { getPlayListCatlist, getPlayListHot, getTopPlaylist, getHighqualityTags } from 'request/withOutLoginApi'
 
 import style from './style.module.css'
 import custom from 'assets/styles/custom.module.css'
-import { PlaylistTag, HotPlaylistTag, Categories, PlayList } from 'types'
+import { PlaylistTag, HotPlaylistTag, PlayList } from 'types'
 
 export default function SongSheet() {
   const [hotTags, setHotTags] = useState<HotPlaylistTag[]>()
@@ -145,7 +139,11 @@ export default function SongSheet() {
         </span>
         <div>
           {hotTags?.map((item) => (
-            <span className={cat === item.name ? style.tag_checked : style.tag} onClick={() => setCat(item.name)}>
+            <span
+              key={item.id}
+              className={cat === item.name ? style.tag_checked : style.tag}
+              onClick={() => setCat(item.name)}
+            >
               {item.name}
             </span>
           ))}
@@ -160,7 +158,7 @@ export default function SongSheet() {
               id={item.id}
               picUrl={item.coverImgUrl}
               name={item.name}
-              playcount={item.playCount}
+              playCount={item.playCount}
               alg={item.alg}
               nickname={item.creator.nickname}
             ></Item>

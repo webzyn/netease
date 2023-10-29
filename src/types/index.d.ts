@@ -6,10 +6,12 @@ import Privilege from './Privilege'
 import PlayList from './Playlist'
 import Comment from './Comment'
 import { PlaylistTag, HotPlaylistTag, Categories } from './playlistTag'
+import NewSong from './NewSong'
+import Albums from './Albums'
 
 export type PlayList = PlayList
 
-// todo歌单中的歌曲对象
+// todo歌单中的歌曲对象 -> 不包含url
 export type Track = Track
 
 export type Privilege = Privilege
@@ -30,3 +32,9 @@ export type Comment = Comment
 export type PlaylistTag = PlaylistTag
 export type HotPlaylistTag = HotPlaylistTag
 export type Categories = Categories
+
+// ! 新歌速递
+export type NewSong = NewSong
+
+// ! 新碟
+export type Albums = Albums

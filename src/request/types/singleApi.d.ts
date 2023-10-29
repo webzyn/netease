@@ -1,3 +1,4 @@
+import internal from 'stream'
 import { SongSheet } from './common'
 import {
   Track,
@@ -9,7 +10,9 @@ import {
   Comment,
   HotPlaylistTag,
   Categories,
-  PlaylistTag
+  PlaylistTag,
+  NewSong,
+  Albums
 } from 'types'
 
 export interface PersonalizedRes {
@@ -124,4 +127,25 @@ export interface TopListRes {
     upateFrequency: string
     updateFrequency: string
   }
+}
+
+// ! 新歌速递
+export interface TopSongRes {
+  code: number
+  data: NewSong[]
+}
+
+// ! 全部新碟
+export interface NewAlbumRes {
+  code: number
+  total: number
+  albums: Albums[]
+}
+
+// ! 专辑中的歌曲
+export interface AlbumRes {
+  code: number
+  album: Album
+  resourceState: boolean
+  songs: Track[]
 }

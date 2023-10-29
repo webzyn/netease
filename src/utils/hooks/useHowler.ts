@@ -48,6 +48,11 @@ export default function useHowler(): UseHowlerReturnType {
 
   const [flag, setFlag] = useState<boolean>(false) // 用于单曲循环重新生成howl实例(值无其他意义)
 
+  // ! 解决bug 播放列表为空时，添加歌曲并播放时无法播放
+  useEffect(() => {
+    setAutoPlay(true)
+  }, [playList.id])
+
   useEffect(() => {
     unload()
     if (currentTrackIndex > -1 && songs && songs.length > 0 && currentTrackIndex < songs.length) {
@@ -55,6 +60,10 @@ export default function useHowler(): UseHowlerReturnType {
       // 获取歌曲url
       getSongUrlv1(id, 'hires').then((res) => {
         if (res.code === 200) {
+          if (!res.data[0].url) {
+            alert('资源无法播放，下一首')
+            return next()
+          }
           createHowl(res.data[0].url)
           dispatch(setDuration(res.data[0].time))
         }

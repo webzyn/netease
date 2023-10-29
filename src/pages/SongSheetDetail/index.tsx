@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState, useContext, useRef } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import PlayerContext from 'context/PlayerContext'
 import { useParams } from 'react-router-dom'
 
@@ -28,27 +28,50 @@ const SongSheet = () => {
   const wrapRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<DetailHeaderRef>(null)
   const tabsRef = useRef<TabsRef>(null)
-  const [scroll, setScroll] = useState<{ x: number; y: number }>()
 
   useEffect(() => {
     getSongSheetDetail(id as string, 60).then((res) => {
       if (res.code === 200) {
         setDetail(res)
-        let ids = res.playlist.trackIds.map((item) => item.id).join(',')
-        getSongDetail(ids).then((res2) => {
-          if (res2.code === 200) {
-            setSongs(res2.songs)
-          }
-        })
+        const idsArr = convert(res.playlist.trackIds.map((item) => item.id))
+        Promise.all(idsArr.map((ids) => getData(ids)))
+          .then((res) => {
+            let result: Track[] = []
+            res.forEach((item) => (result = [...result, ...item]))
+            setSongs(result)
+          })
+          .catch(() => {
+            setSongs([])
+          })
       }
     })
   }, [id])
+
+  const convert = (oldArr: number[]) => {
+    // 将数组拆分成二维数组
+    var newArr = []
+    for (var i = 0; i < oldArr.length; i += 500) {
+      var chunk = oldArr.slice(i, i + 500)
+      newArr.push(chunk)
+    }
+    return newArr
+  }
+
+  const getData = (ids: number[]) => {
+    return new Promise((resolve: (value: Track[]) => void) => {
+      getSongDetail(ids.join(',')).then((res) => {
+        if (res.code === 200) {
+          resolve(res.songs)
+        }
+      })
+    })
+  }
 
   useEffect(() => {
     setMenuList([
       {
         label: '歌曲列表',
-        element: <SongList songs={songs} scroll={scroll} />
+        element: <SongList songs={songs} />
       },
       {
         label: `评论(${detail?.playlist.commentCount || 0})`,
@@ -59,61 +82,7 @@ const SongSheet = () => {
         element: <Collectors />
       }
     ])
-  }, [songs, scroll])
-
-  // useEffect(() => {
-  //   if (headerRef.current?.rootDiv && tabsRef.current?.tabsDiv) {
-  //     const x = headerRef.current.rootDiv.clientWidth
-  //     const wrapHeight = wrapRef.current?.clientHeight
-  //     const headerHeight = headerRef.current.rootDiv.clientHeight
-  //     const tabsHeight = tabsRef.current.tabsDiv.clientHeight
-  //     const y = (wrapHeight as number) - headerHeight - tabsHeight
-
-  //     setScroll({
-  //       x: x as number,
-  //       y: y - 39
-  //     })
-  //   }
-  // }, [
-  //   wrapRef.current?.offsetWidth,
-  //   wrapRef.current?.offsetHeight,
-  //   headerRef.current?.rootDiv.offsetWidth,
-  //   headerRef.current?.rootDiv.offsetHeight,
-  //   tabsRef.current?.tabsDiv.offsetWidth,
-  //   tabsRef.current?.tabsDiv.offsetHeight
-  // ])
-  // useEffect(() => {
-  //   window.addEventListener('resize', handleWindowResize)
-  //   return () => {
-  //     window.removeEventListener('resize', handleWindowResize)
-  //   }
-  // }, [])
-
-  // const handleWindowResize = () => {
-  //   console.log('111')
-
-  //   // 处理窗口大小变化事件
-  //   if (headerRef.current?.rootDiv && tabsRef.current?.tabsDiv) {
-  //     console.log(window.innerWidth)
-
-  //     let x = window.innerWidth - 200
-  //     let wrapHeight = wrapRef.current?.clientHeight
-  //     let headerHeight = headerRef.current.rootDiv.clientHeight
-  //     let tabsHeight = tabsRef.current.tabsDiv.clientHeight
-  //     let y = (wrapHeight as number) - headerHeight - tabsHeight
-  //     if (window.innerWidth - 200 < 760) {
-  //       x = 760
-  //     }
-  //     setScroll({
-  //       x: x as number,
-  //       y: y - 39
-  //     })
-  //     console.log({
-  //       x: x as number,
-  //       y: y - 39
-  //     })
-  //   }
-  // }
+  }, [songs])
 
   return (
     <div>
@@ -135,6 +104,7 @@ const SongSheet = () => {
             changeSongSheet={() => changeSongSheet(id, songs)}
             addPlayList={() => addPlayList(id, songs)}
           ></DetailHeader>
+
           <Tabs items={menuList} ref={tabsRef}></Tabs>
         </div>
       )}

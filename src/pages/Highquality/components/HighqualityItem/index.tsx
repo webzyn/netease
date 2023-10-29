@@ -39,6 +39,7 @@ export default function HighqualityItem(props: IProp) {
           <CaretRightFilled />
           {converUnits(playlist.playCount)}
         </span>
+        <div className={style.mask}></div>
         {isHover && (
           <div className={style.circle} onClick={play}>
             <CaretRightOutlined

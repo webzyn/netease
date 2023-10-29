@@ -1,11 +1,10 @@
 import React, { useState, useContext, useRef, useEffect } from 'react'
-import PlayerContext from 'context/PlayerContext'
 import { useParams } from 'react-router-dom'
 
 import { ConfigProvider, Table } from 'antd'
 import { HeartOutlined, DownloadOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
-
+import usePlayer from 'utils/hooks/usePlayer'
 import { converTime } from 'utils/utils'
 
 import style from './style.module.css'
@@ -15,18 +14,14 @@ import type { ColumnsType } from 'antd/es/table'
 import { Store } from 'store/types'
 interface IProp {
   songs: Track[]
-  scroll?: {
-    x: number
-    y: number
-  }
 }
 
 export default function SongList(props: IProp) {
   const [hoverIndex, setHoverIndex] = useState(-1)
   const playList = useSelector((store: Store) => store.playList)
-  const { songs, scroll } = props
-  const { manualPlay, playSongSheet } = useContext(PlayerContext)
+  const { songs } = props
   let { id } = useParams()
+  const { playSong } = usePlayer()
 
   const goSinger = (id: number) => {
     alert('歌手详情' + id)
@@ -40,13 +35,6 @@ export default function SongList(props: IProp) {
   }
   const onDownLoad = () => {
     alert('下载')
-  }
-  const playSong = (index: number) => {
-    if (playList.songs[playList.currentIndex].id === songs[index].id) {
-      manualPlay()
-    } else {
-      playSongSheet(id, songs, index)
-    }
   }
 
   const columns: ColumnsType<Track> = [
@@ -109,7 +97,7 @@ export default function SongList(props: IProp) {
       render: (text, record, index) => (
         <>
           {record.ar.map((item, i, arr) => (
-            <>
+            <span key={i}>
               <span className={style.info} onClick={() => goSinger(item.id)}>
                 {item.name}
               </span>
@@ -118,7 +106,7 @@ export default function SongList(props: IProp) {
               ) : (
                 <span style={{ color: 'var(--text-second-color)', cursor: 'default' }}> / </span>
               )}
-            </>
+            </span>
           ))}
         </>
       )
@@ -151,7 +139,7 @@ export default function SongList(props: IProp) {
   ]
 
   return (
-    <>
+    <div>
       {songs && songs!.length > 0 && (
         <ConfigProvider
           theme={{
@@ -170,13 +158,14 @@ export default function SongList(props: IProp) {
             columns={columns}
             dataSource={songs}
             pagination={false}
+            rowKey='id'
             size='small'
             rowClassName={(record, index) => (index % 2 === 1 ? style.stripe : '')}
             onRow={(record, index) => {
               return {
                 onClick: (event) => {}, // 点击行
                 onDoubleClick: (event) => {
-                  playSong(index as number)
+                  playSong(id as string, songs, index as number)
                 },
                 onContextMenu: (event) => {},
                 onMouseEnter: (event) => {
@@ -190,6 +179,6 @@ export default function SongList(props: IProp) {
           />
         </ConfigProvider>
       )}
-    </>
+    </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ReactNode } from 'react'
 
 import { useSelector } from 'react-redux/es/hooks/useSelector'
@@ -7,6 +7,8 @@ import { setSongs, setCurrentIndex, setMode, resetPlayList, addSongs } from 'sto
 import useHowler from 'utils/hooks/useHowler'
 
 import PlayerContext from 'context/PlayerContext'
+
+import { getSongDetail } from 'request/withOutLoginApi'
 
 import { Track } from 'types'
 import { Store } from 'store/types'
@@ -68,8 +70,18 @@ export default function Player(props: { children: ReactNode }) {
     playList.currentIndex === 0 ? _manualPlay() : dispatch(setCurrentIndex(0))
   }
 
-  const playSongSheet = (id: string | number, songs: Track[], index: number) => {
-    if (playList.songs[playList.currentIndex].id === songs[index].id) {
+  // todo 播放指定歌曲
+  /*
+    id: 歌单id
+    songs: 歌单所有音乐
+    index: 当前播放歌曲在歌单中的索引
+  */
+  const playSong = (id: string | number, songs: Track[], index: number) => {
+    if (
+      playList.songs.length > 0 &&
+      playList.currentIndex > -1 &&
+      playList.songs[playList.currentIndex].id === songs[index].id
+    ) {
       _manualPlay()
     } else {
       dispatch(
@@ -88,7 +100,7 @@ export default function Player(props: { children: ReactNode }) {
     dispatch(resetPlayList())
   }
 
-  // 歌单中添加歌曲
+  // 歌单中歌曲全部添加到播放列表
   const addPlayList = (id: string | number, songs: Track[]) => {
     dispatch(
       addSongs({
@@ -96,6 +108,28 @@ export default function Player(props: { children: ReactNode }) {
         songs
       })
     )
+  }
+
+  // todo 播放列表 添加歌曲 并播放
+  // id 歌曲id
+  const addSongAndPlay = (id: string | number) => {
+    getSongDetail(id).then((res) => {
+      if (res.code === 200) {
+        dispatch(
+          addSongs({
+            id,
+            songs: [res.songs[0]]
+          })
+        )
+        const currentIndex = playList.songs.findIndex((song) => song.id === id)
+        if (currentIndex >= 0) {
+          dispatch(setCurrentIndex(currentIndex))
+        } else {
+          dispatch(setCurrentIndex(playList.songs.length))
+        }
+        setPlaying(true)
+      }
+    })
   }
 
   const context = {
@@ -118,7 +152,8 @@ export default function Player(props: { children: ReactNode }) {
     changeSongSheet,
     cleanSongList,
     addPlayList,
-    playSongSheet
+    playSong,
+    addSongAndPlay
   }
 
   return (

@@ -2,7 +2,7 @@ export interface IProps {
   id: number
   picUrl: string
   name: string
-  playcount: number
+  playCount: number
   describe?: string
   size?: string // 图片大小
   alg: string

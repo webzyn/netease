@@ -36,7 +36,7 @@ const PersonalizedSongSheet = () => {
               id={item.id}
               picUrl={item.picUrl}
               name={item.name}
-              playcount={item.playcount}
+              playCount={item.playcount || item.playCount}
               alg={item.alg}
             ></Item>
           </div>

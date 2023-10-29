@@ -6,7 +6,7 @@ export function converTime(seconds: number): string {
 }
 
 export const converUnits = (count: number) => {
-  if (count > 1000000000) {
+  if (count > 100000000) {
     return (count / 100000000).toFixed(0) + '亿'
   } else if (count > 100000) {
     return (count / 10000).toFixed(0) + '万'

@@ -25,7 +25,7 @@ export const commentLike = (
   id: number | string,
   cid: number | string,
   t: 0 | 1,
-  type: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
+  type: number
 ): Promise<{ code: number }> => {
   return post('/comment/like', { id, cid, t, type }) as Promise<{ code: number }>
 }
@@ -41,7 +41,7 @@ export const comment = (
   id: number | string,
   content: string,
   t: 1 | 2,
-  type: 0 | 1 | 2 | 3 | 4 | 5 | 6,
+  type: number,
   commentId?: number | string
 ): Promise<{ code: number; comment: Comment }> => {
   return post('/comment', { id, content, t, type, commentId }) as Promise<{ code: number; comment: Comment }>
@@ -55,7 +55,7 @@ export const comment = (
 // commentId :评论 id
 export const deleteComment = (
   id: number | string,
-  type: 0 | 1 | 2 | 3 | 4 | 5 | 6,
+  type: number,
   commentId: number | string
 ): Promise<{ code: number }> => {
   const t = 0
@@ -67,3 +67,9 @@ export const likelist = () => {
 }
 
 export default {}
+
+// ! 收藏/取消收藏专辑
+// t : 类型,1:收藏,2:取消收藏 id : 歌单 id
+export const albumSub = (id: number | string, t: number | string): Promise<{ code: number }> => {
+  return post('/album/sub', { t, id }) as Promise<{ code: number }>
+}

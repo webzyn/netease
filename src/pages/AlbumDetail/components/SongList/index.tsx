@@ -1,29 +1,40 @@
 import React, { useState, useContext, useRef, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { ConfigProvider, Table } from 'antd'
+import { ConfigProvider, Table, Progress } from 'antd'
 import { HeartOutlined, DownloadOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
 import usePlayer from 'utils/hooks/usePlayer'
 import useJump from 'utils/hooks/useJump'
 import { converTime } from 'utils/utils'
+import { getAlbum } from 'request/withOutLoginApi'
 
 import style from './style.module.css'
 
 import { Track } from 'types'
 import type { ColumnsType } from 'antd/es/table'
 import { Store } from 'store/types'
-interface IProp {
-  songs: Track[]
-}
 
-export default function SongList(props: IProp) {
+export default function SongList() {
   const [hoverIndex, setHoverIndex] = useState(-1)
   const playList = useSelector((store: Store) => store.playList)
-  const { songs } = props
+
+  const [songs, setSongs] = useState<Track[]>()
   let { id } = useParams()
   const { playSong } = usePlayer()
   const { goAlbumDetail } = useJump()
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  const getData = () => {
+    getAlbum(id as string).then((res) => {
+      if (res.code === 200) {
+        setSongs(res.songs)
+      }
+    })
+  }
 
   const goSinger = (id: number) => {
     alert('歌手详情' + id)
@@ -47,7 +58,6 @@ export default function SongList(props: IProp) {
       }
     },
     {
-      title: '操作',
       width: 55,
       key: 'id',
       render: () => (
@@ -62,7 +72,7 @@ export default function SongList(props: IProp) {
       )
     },
     {
-      title: '标题',
+      title: '音乐标题',
       dataIndex: 'name',
       key: 'name',
       ellipsis: true,
@@ -136,6 +146,18 @@ export default function SongList(props: IProp) {
       render: (text, record, index) => (
         <span style={{ color: 'var(--text-second-color)', cursor: 'default' }}>{converTime(text / 1000)}</span>
       )
+    },
+    {
+      title: '热度',
+      dataIndex: 'pop',
+      key: 'pop',
+      ellipsis: true,
+      width: '15%',
+      render: (text, record, index) => (
+        <div style={{ paddingRight: '15px' }}>
+          <Progress percent={record.pop} showInfo={false} strokeColor='#CACACA' />
+        </div>
+      )
     }
   ]
 
@@ -161,7 +183,7 @@ export default function SongList(props: IProp) {
             pagination={false}
             rowKey='id'
             size='small'
-            rowClassName={(record, index) => (index % 2 === 1 ? style.stripe : '')}
+            rowClassName={(record, index) => (index % 2 === 0 ? style.stripe : '')}
             onRow={(record, index) => {
               return {
                 onClick: (event) => {}, // 点击行

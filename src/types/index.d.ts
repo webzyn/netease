@@ -7,7 +7,7 @@ import PlayList from './Playlist'
 import Comment from './Comment'
 import { PlaylistTag, HotPlaylistTag, Categories } from './playlistTag'
 import NewSong from './NewSong'
-import Albums from './Albums'
+import Album from './Album'
 
 export type PlayList = PlayList
 
@@ -37,4 +37,4 @@ export type Categories = Categories
 export type NewSong = NewSong
 
 // ! 新碟
-export type Albums = Albums
+export type Album = Album

@@ -8,9 +8,9 @@ import usePlayer from 'utils/hooks/usePlayer'
 import style from './style.module.css'
 import custom from 'assets/styles/custom.module.css'
 
-import { Albums } from 'types'
+import { Album } from 'types'
 export default function Disc() {
-  const [disc, setDisc] = useState<Albums[]>([])
+  const [disc, setDisc] = useState<Album[]>([])
   const [type, setType] = useState('ALL')
   const [total, setTotal] = useState(0)
   const [currentHover, setCurrentHover] = useState(-1)
@@ -100,17 +100,19 @@ export default function Disc() {
           </div>
         ))}
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Pagination
-          className={custom.pagination}
-          size='small'
-          current={page}
-          total={total}
-          pageSize={20}
-          showSizeChanger={false}
-          onChange={onChange}
-        />
-      </div>
+      {total > 0 && (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Pagination
+            className={custom.pagination}
+            size='small'
+            current={page}
+            total={total}
+            pageSize={20}
+            showSizeChanger={false}
+            onChange={onChange}
+          />
+        </div>
+      )}
     </div>
   )
 }

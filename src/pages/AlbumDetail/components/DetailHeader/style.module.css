@@ -1,0 +1,108 @@
+.root {
+  min-width: 760px;
+  padding: 30px;
+  display: flex;
+  font-size: 13px;
+  cursor: default;
+  color: var(--text-primary-color);
+  .img {
+    width: 185px;
+    height: 185px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .main {
+    margin-left: 20px;
+    flex: 1;
+    .title {
+      display: flex;
+      .type {
+        display: inline-block;
+        font-size: 14px;
+        padding: 3px;
+        border-radius: 3px;
+        border: 1px solid var(--theme-background);
+        box-sizing: border-box;
+        margin-right: 10px;
+        color: var(--theme-background);
+      }
+      .name {
+        font-size: 22px;
+        font-weight: 900;
+      }
+    }
+    .user {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      color: var(--text-second-color);
+      .avatarUrl {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .nickname {
+        color: var(--text-link-color);
+        margin: 0 5px;
+        cursor: pointer;
+      }
+    }
+  }
+  .action {
+    margin-bottom: 18px;
+    :global(.ant-btn) {
+      border-radius: 16px;
+    }
+    :global(.ant-btn-primary) {
+      background-color: var(--theme-background);
+    }
+    :global(.ant-btn-primary):hover {
+      background-color: var(--theme-background) !important;
+      filter: brightness(0.95); /* 通过滤镜调整亮度 */
+    }
+    .compose {
+      .left {
+        padding-right: 8px;
+        border-radius: 16px 0 0 16px;
+      }
+      .right {
+        padding: 4px 10px;
+        border-radius: 0 16px 16px 0;
+        border-left: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    }
+    :global(.ant-btn-default) {
+      color: var(--text-primary-color);
+    }
+    :global(.ant-btn-default):hover {
+      color: var(--text-primary-color) !important;
+      border-color: var(--background-third-color) !important;
+      background-color: var(--background-second-color) !important;
+    }
+    :global(.ant-btn-default:disabled) {
+      background-color: #fff !important;
+      color: var(--disabled-text-color) !important;
+    }
+    :global(.ant-btn-default:disabled):hover {
+      color: var(--disabled-text-color) !important;
+      background-color: #fff !important;
+    }
+
+    .second {
+      margin-left: 10px;
+    }
+  }
+  .singer {
+    margin-bottom: 10px;
+  }
+}
+.text_second {
+  color: var(--text-second-color);
+}
+.link {
+  color: var(--text-link-color);
+  margin: 0 5px;
+  cursor: pointer;
+}

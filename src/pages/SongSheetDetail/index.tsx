@@ -4,30 +4,28 @@ import { useParams } from 'react-router-dom'
 
 import { getSongSheetDetail, getSongDetail } from 'request/withOutLoginApi'
 
-import DetailHeader from 'components/DetailHeader'
+import DetailHeader from './components/DetailHeader'
 import Tabs from 'components/Tabs'
 import SongList from './components/SongList'
-import Comment from './components/Comment'
+import DetailComment from 'components/DetailComment'
 import Collectors from './components/Collectors'
 
 import { SongSheetDetailRes } from 'request/types/singleApi'
 
 import { DetailHeaderRef, TabsRef } from 'types/refs'
 import { Track } from 'types'
-interface MenuList {
-  label: string
-  element: React.ReactNode
-}
 
 const SongSheet = () => {
   const { addPlayList, changeSongSheet } = useContext(PlayerContext)
   let { id } = useParams()
   const [detail, setDetail] = useState<SongSheetDetailRes>()
   const [songs, setSongs] = useState<Track[]>([])
-  const [menuList, setMenuList] = useState<MenuList[]>([])
+  const [menuList, setMenuList] = useState<string[]>(['歌曲列表', '评论(0)', '收藏者'])
   const wrapRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<DetailHeaderRef>(null)
   const tabsRef = useRef<TabsRef>(null)
+
+  const [isActive, setIsAction] = useState(0)
 
   useEffect(() => {
     getSongSheetDetail(id as string, 60).then((res) => {
@@ -68,21 +66,8 @@ const SongSheet = () => {
   }
 
   useEffect(() => {
-    setMenuList([
-      {
-        label: '歌曲列表',
-        element: <SongList songs={songs} />
-      },
-      {
-        label: `评论(${detail?.playlist.commentCount || 0})`,
-        element: <Comment />
-      },
-      {
-        label: '收藏者',
-        element: <Collectors />
-      }
-    ])
-  }, [songs])
+    setMenuList(['歌曲列表', `评论(${detail?.playlist.commentCount || 0})`, '收藏者'])
+  }, [detail])
 
   return (
     <div>
@@ -105,7 +90,10 @@ const SongSheet = () => {
             addPlayList={() => addPlayList(id, songs)}
           ></DetailHeader>
 
-          <Tabs items={menuList} ref={tabsRef}></Tabs>
+          <Tabs items={menuList} ref={tabsRef} isActive={isActive} setIsAction={setIsAction}></Tabs>
+          {isActive === 0 && songs.length > 0 && <SongList songs={songs} />}
+          {isActive === 1 && <DetailComment />}
+          {isActive === 2 && <Collectors />}
         </div>
       )}
     </div>

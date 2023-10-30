@@ -14,9 +14,22 @@
   .main {
     margin-left: 20px;
     flex: 1;
-    .name {
-      font-size: 22px;
-      font-weight: 900;
+    .title {
+      display: flex;
+      .type {
+        display: inline-block;
+        font-size: 14px;
+        padding: 3px;
+        border-radius: 3px;
+        border: 1px solid var(--theme-background);
+        box-sizing: border-box;
+        margin-right: 10px;
+        color: var(--theme-background);
+      }
+      .name {
+        font-size: 22px;
+        font-weight: 900;
+      }
     }
     .user {
       margin: 10px 0;

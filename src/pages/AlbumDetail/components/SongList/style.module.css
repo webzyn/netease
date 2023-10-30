@@ -1,0 +1,32 @@
+.table {
+  .stripe {
+    background-color: #fafafa;
+  }
+}
+
+.table :global(.ant-table-tbody > tr > td) {
+  border-bottom: none;
+}
+
+.table :global(.ant-table-thead .ant-table-cell) {
+  font-weight: 500 !important;
+  border-bottom: none;
+}
+
+.info {
+  cursor: pointer;
+  color: var(--text-second-color);
+}
+
+.info:hover {
+  cursor: pointer;
+  color: var(--text-primary-color);
+}
+
+.icon {
+  cursor: pointer;
+  color: #ccc;
+}
+.icon:hover {
+  color: var(--text-second-color);
+}

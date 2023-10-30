@@ -301,7 +301,7 @@ const navMenuList: NavMenuObject[] = [
     meta: {
       jump: true,
       showNav: false,
-      search: '/:id'
+      search: '/:id/:t'
     },
     element: <SongSheetDetail />
   },
@@ -341,7 +341,7 @@ const navMenuList: NavMenuObject[] = [
     meta: {
       jump: true,
       showNav: false,
-      search: '/:id'
+      search: '/:id/:t'
     },
     element: (
       <Suspense fallback={<>加载中...</>}>

@@ -17,12 +17,12 @@ export default function useJump() {
 
   // 跳转到歌单详情
   const goSongSheetDetail = (id: number) => {
-    navigate(`/songSheetDetail/${id}`)
+    navigate(`/songSheetDetail/${id}/2`)
   }
 
   // 跳转到专辑详情
   const goAlbumDetail = (id: number) => {
-    navigate(`/albumDetail/${id}`)
+    navigate(`/albumDetail/${id}/3`)
   }
 
   return { goExcitingComments, goHighquality, goSongSheetDetail, goAlbumDetail }

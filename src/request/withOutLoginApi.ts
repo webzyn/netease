@@ -8,7 +8,7 @@ import {
   SongSheetDetailRes,
   SongDetailRes,
   SubscribersRes,
-  CommentOfPlaylistRes,
+  CommentRes,
   CommentHotRes,
   PlayListCatlistRes,
   PlayListHotRes,
@@ -18,7 +18,8 @@ import {
   TopListRes,
   TopSongRes,
   NewAlbumRes,
-  AlbumRes
+  AlbumRes,
+  AlbumDetailDynamicRes
 } from './types/singleApi'
 
 // todo 获取歌单
@@ -70,12 +71,30 @@ export const getSubscribers = (id: number | string, limit?: number, offset?: num
 // offset: 偏移数量 , 用于分页 , 如 :( 评论页数 -1)*20, 其中 20 为 limit 的值
 // before: 分页参数,取上一页最后一项的
 // time 获取下一页数据(获取超过 5000 条评论的时候需要用到)
-export const getCommentOfPlaylist = (
-  id: number | string,
-  limit?: number,
-  offset?: number
-): Promise<CommentOfPlaylistRes> => {
-  return get('/comment/playlist', { id, limit, offset }) as Promise<CommentOfPlaylistRes>
+export const getCommentOfPlaylist = (id: number | string, limit?: number, offset?: number): Promise<CommentRes> => {
+  return get('/comment/playlist', { id, limit, offset }) as Promise<CommentRes>
+}
+
+// todo 获取专辑评论
+// 必选参数 : id: 专辑 id
+// 可选参数 : limit: 取出评论数量 , 默认为 20
+// offset: 偏移数量 , 用于分页 , 如 :( 评论页数 -1)*20, 其中 20 为 limit 的值
+// before: 分页参数,取上一页最后一项的
+// time 获取下一页数据(获取超过 5000 条评论的时候需要用到)
+export const getCommentOfAlbum = (id: number | string, limit?: number, offset?: number): Promise<CommentRes> => {
+  return get('/comment/album', { id, limit, offset }) as Promise<CommentRes>
+}
+
+// todo 获取歌单评论-新版
+// 必选参数 : id : 资源 id
+// type: 数字 , 资源类型 0: 歌曲 1: mv 2: 歌单 3: 专辑 4: 电台节目 5: 视频 6: 动态 7: 电台
+// 可选
+// pageNo:分页参数,第 N 页,默认为 1
+// pageSize:分页参数,每页多少条数据,默认 20
+// sortType: 排序方式, 1:按推荐排序, 2:按热度排序, 3:按时间排序
+// cursor: 当sortType为 3 时且页数不是第一页时需传入,值为上一条数据的 time
+export const getComment = (id: number | string, type: number, pageNo = 1, pageSize = 60): Promise<any> => {
+  return get('/comment/new', { id, type, pageNo, pageSize }) as Promise<any>
 }
 
 // todo 获取热门评论
@@ -176,6 +195,6 @@ export const getAlbum = (id: number | string): Promise<AlbumRes> => {
 }
 
 //  todo 专辑动态信息
-export const getAlbumDetailDynamic = (id: number | string): Promise<any> => {
-  return get('/album/detail/dynamic', { id })
+export const getAlbumDetailDynamic = (id: number | string): Promise<AlbumDetailDynamicRes> => {
+  return get('/album/detail/dynamic', { id }) as Promise<AlbumDetailDynamicRes>
 }

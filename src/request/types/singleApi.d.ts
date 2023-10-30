@@ -12,7 +12,7 @@ import {
   Categories,
   PlaylistTag,
   NewSong,
-  Albums
+  Album
 } from 'types'
 
 export interface PersonalizedRes {
@@ -55,7 +55,7 @@ export interface SubscribersRes {
 }
 
 // 歌单评论
-export interface CommentOfPlaylistRes {
+export interface CommentRes {
   cnum: number
   code: number
   commentBanner: any
@@ -148,4 +148,17 @@ export interface AlbumRes {
   album: Album
   resourceState: boolean
   songs: Track[]
+}
+
+// ! 专辑动态信息
+export interface AlbumDetailDynamicRes {
+  albumGameInfo: any
+  code: number
+  commentCount: number
+  isSub: boolean
+  likedCount: number
+  onSale: boolean
+  shareCount: number
+  subCount: number
+  subTime: number
 }

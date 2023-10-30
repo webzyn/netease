@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import CommentList from 'components/commentList'
 import { commentLike, comment, deleteComment } from 'request/withLoginApi'
-import { getCommentOfPlaylist } from 'request/withOutLoginApi'
+import { getCommentOfPlaylist, getCommentOfAlbum } from 'request/withOutLoginApi'
 import useJump from 'utils/hooks/useJump'
 
 import { Input, Pagination, Button, message } from 'antd'
@@ -15,8 +15,9 @@ import { Comment } from 'types'
 
 const { TextArea } = Input
 
-export default function CommentCom() {
-  const { id } = useParams()
+export default function DetailComment() {
+  const { id, t } = useParams()
+  const type = Number(t)
   const [page, setPage] = useState<number>(1)
   const [total, setTotal] = useState<number>(0)
   const [hotComments, setHotComments] = useState<Comment[]>([])
@@ -28,24 +29,41 @@ export default function CommentCom() {
 
   useEffect(() => {
     getData()
-  }, [])
+  }, [page])
 
   const getData = () => {
     return new Promise((resolve, reject) => {
-      getCommentOfPlaylist(id as string, 60, (page - 1) * 60).then((res) => {
-        if (res.code === 200) {
-          setTotal(res.total)
-          setHotComments(res.hotComments)
-          setComments(res.comments)
-          resolve(res)
-        }
-      })
+      switch (type) {
+        case 2:
+          getCommentOfPlaylist(id as string, 60, (page - 1) * 60).then((res) => {
+            if (res.code === 200) {
+              setTotal(res.total)
+              setHotComments(res.hotComments)
+              setComments(res.comments)
+              resolve(res)
+            }
+          })
+          return
+        case 3:
+          getCommentOfAlbum(id as string, 60, (page - 1) * 60).then((res) => {
+            if (res.code === 200) {
+              setTotal(res.total)
+              setHotComments(res.hotComments)
+              setComments(res.comments)
+              resolve(res)
+            }
+          })
+          return
+
+        default:
+          break
+      }
     })
   }
 
   const like = (cid: number | string, liked: boolean) => {
     let t: 0 | 1 = liked ? 0 : 1
-    commentLike(id as string, cid, t, 2).then((res) => {
+    commentLike(id as string, cid, t, type as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7).then((res) => {
       if (res.code === 200) {
         getData()
       }
@@ -74,17 +92,17 @@ export default function CommentCom() {
   }, [textAreaValue])
   const sendComment = () => {
     if (textAreaValue && textAreaValue.length > 0) {
-      let type: 1 | 2 = 1
+      let t: 1 | 2 = 1
       let content = textAreaValue
       if (commentId !== -1) {
-        type = 2
+        t = 2
         content = textAreaValue.replace(replyText, '')
       }
       if (content.length <= 0) {
         return message.info('请输入评论')
       }
 
-      comment(id as string, content, type, 2, commentId).then((res) => {
+      comment(id as string, content, t, type, commentId).then((res) => {
         if (res.code === 200) {
           setPage(1)
           setTextAreaValue('')
@@ -104,7 +122,7 @@ export default function CommentCom() {
   // 评论end
 
   const onDelete = (commentId: number) => {
-    deleteComment(id as string, 2, commentId).then((res) => {
+    deleteComment(id as string, type, commentId).then((res) => {
       if (res.code === 200) {
         message.info('删除成功')
         setTimeout(() => {

@@ -63,8 +63,13 @@ const DetailHeader = React.forwardRef((props: IProp, ref: React.ForwardedRef<Det
       <div className={style.img}>
         <img src={playlist.coverImgUrl} alt='' className={style.img} />
       </div>
+
       <div className={style.main}>
-        <div className={style.name}>{playlist.name}</div>
+        <div className={style.title}>
+          <span className={style.type}>歌单</span>
+          <span className={style.name}>{playlist.name}</span>
+        </div>
+
         <div className={style.user}>
           <div className={style.avatarUrl}>
             <img src={creator.avatarUrl} alt='' className={style.avatarUrl} />
@@ -122,6 +127,7 @@ const DetailHeader = React.forwardRef((props: IProp, ref: React.ForwardedRef<Det
         ) : (
           <></>
         )}
+
         <div className={style.count}>
           <span>
             歌曲 : <span className={style.text_second}>{playlist.trackCount}</span>
@@ -130,6 +136,7 @@ const DetailHeader = React.forwardRef((props: IProp, ref: React.ForwardedRef<Det
             播放 : <span className={style.text_second}>{converUnits(playlist.playCount)}</span>
           </span>
         </div>
+
         {playlist.trialMode !== 10 && playlist.description ? (
           <div className={style.description}>
             <span>简介 : </span>

@@ -14,9 +14,13 @@ const Footer = () => {
 
   return (
     <div className={style.footer}>
-      {songs.length > 0 ? <Info song={currentDetail} /> : <div style={{ width: '290px' }}></div>}
-      <Player playMode={playList.mode} disabled={songs.length <= 0} />
-      {songs.length > 0 ? <Oper /> : <div style={{ width: '290px' }}></div>}
+      {playList.currentIndex > -1 && songs.length > 0 ? (
+        <Info song={currentDetail} />
+      ) : (
+        <div style={{ width: '290px' }}></div>
+      )}
+      <Player playMode={playList.mode} disabled={songs.length <= 0 || playList.currentIndex <= -1} />
+      {playList.currentIndex > -1 && songs.length > 0 ? <Oper /> : <div style={{ width: '290px' }}></div>}
     </div>
   )
 }

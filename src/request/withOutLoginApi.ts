@@ -19,7 +19,14 @@ import {
   TopSongRes,
   NewAlbumRes,
   AlbumRes,
-  AlbumDetailDynamicRes
+  AlbumDetailDynamicRes,
+  ArtistListRes,
+  ArtistDetailRes,
+  ArtistAlbumRes,
+  ArtistTopSongRes,
+  ArtistMvRes,
+  ArtistDescRes,
+  SimiArtistRes
 } from './types/singleApi'
 
 // todo 获取歌单
@@ -119,11 +126,6 @@ export const getSongDetail = (ids: number | string): Promise<SongDetailRes> => {
   return get('/song/detail', { ids }) as Promise<SongDetailRes>
 }
 
-// todo 获取歌手详情
-// export const getArtistDetail = (id: number | string): Promise<SongSheetDetailRes> => {
-//   return get('/artist/detail', { id }) as Promise<SongSheetDetailRes>
-// }
-
 // ! 歌单分类
 export const getPlayListCatlist = (): Promise<PlayListCatlistRes> => {
   return get('/playlist/catlist') as Promise<PlayListCatlistRes>
@@ -197,4 +199,64 @@ export const getAlbum = (id: number | string): Promise<AlbumRes> => {
 //  todo 专辑动态信息
 export const getAlbumDetailDynamic = (id: number | string): Promise<AlbumDetailDynamicRes> => {
   return get('/album/detail/dynamic', { id }) as Promise<AlbumDetailDynamicRes>
+}
+
+// ! 歌手分类
+// type: 分类
+// area: 语种
+// initial: 筛选
+// page = 1
+// limit = 30
+export const getArtistList = (
+  area?: number | string,
+  type?: number | string,
+  initial?: number | string,
+  page = 1,
+  limit = 30
+): Promise<ArtistListRes> => {
+  return get('/artist/list', { area, type, initial, limit, offset: (page - 1) * limit }) as Promise<ArtistListRes>
+}
+
+// ! 获取歌手详情
+export const getArtistDetail = (id: number | string): Promise<ArtistDetailRes> => {
+  return get('/artist/detail', { id }) as Promise<ArtistDetailRes>
+}
+
+// ! 获取歌手专辑
+// id: 歌手 id
+// limit: 取出数量 , 默认为 20
+// offset: 偏移数量 , 用于分页 , 如 :( 页数 -1)*20, 其中 20 为 limit 的值
+export const getArtistAlbum = (id: number | string, page = 1, pageSize = 20): Promise<ArtistAlbumRes> => {
+  return get('/artist/album', { id, limit: pageSize, offset: (page - 1) * pageSize }) as Promise<ArtistAlbumRes>
+}
+
+// ! 获取歌手热门50首歌曲
+// id: 歌手 id
+export const getArtistTopSong = (id: number | string): Promise<ArtistTopSongRes> => {
+  return get('/artist/top/song', { id }) as Promise<ArtistTopSongRes>
+}
+
+// ! 获取歌手MV
+export const getArtistMv = (id: number | string, page = 1, pageSize = 12): Promise<ArtistMvRes> => {
+  return get('/artist/mv', { id, limit: pageSize, offset: (page - 1) * pageSize }) as Promise<ArtistMvRes>
+}
+
+// ! 获取MV播放地址
+export const getMvUrl = (mvid: number | string): Promise<any> => {
+  return get('/mv', { mvid }) as Promise<any>
+}
+
+// ! 获取歌手描述
+export const getArtistDesc = (id: number | string): Promise<ArtistDescRes> => {
+  return get('/artist/desc', { id }) as Promise<ArtistDescRes>
+}
+
+// ! 获取相似歌手
+export const getSimiArtist = (id: number | string): Promise<SimiArtistRes> => {
+  return get('/simi/artist', { id }) as Promise<SimiArtistRes>
+}
+
+// todo 获取用户详情
+export const getUserDetail = (id: number | string): Promise<any> => {
+  return get('/user/detail', { id }) as Promise<any>
 }

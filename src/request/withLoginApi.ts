@@ -73,3 +73,9 @@ export default {}
 export const albumSub = (id: number | string, t: number | string): Promise<{ code: number }> => {
   return post('/album/sub', { t, id }) as Promise<{ code: number }>
 }
+
+// todo 收藏/取消收藏歌手
+// t : 类型,1:收藏,2:取消收藏 id : 歌单 id
+export const artistSub = (id: number | string, t: number | string): Promise<{ code: number }> => {
+  return post('/artist/sub', { t, id }) as Promise<{ code: number }>
+}

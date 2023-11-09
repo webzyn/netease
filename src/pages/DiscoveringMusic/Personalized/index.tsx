@@ -2,7 +2,6 @@ import React from 'react'
 import Title from 'components/Title'
 import SongSheet from './SongSheet'
 import NewSong from './NewSong'
-import style from './style.module.css'
 
 export default function Personalized() {
   return (

@@ -12,7 +12,10 @@ import {
   Categories,
   PlaylistTag,
   NewSong,
-  Album
+  Album,
+  Artist,
+  ArtistDetail,
+  Mv
 } from 'types'
 
 export interface PersonalizedRes {
@@ -139,7 +142,7 @@ export interface TopSongRes {
 export interface NewAlbumRes {
   code: number
   total: number
-  albums: Albums[]
+  albums: Album[]
 }
 
 // ! 专辑中的歌曲
@@ -161,4 +164,59 @@ export interface AlbumDetailDynamicRes {
   shareCount: number
   subCount: number
   subTime: number
+}
+
+// todo 歌手分类
+export interface ArtistListRes {
+  code: number
+  more: boolean
+  artists: Artist[]
+}
+
+// todo 歌手详情
+export interface ArtistDetailRes {
+  code: number
+  data: ArtistDetail
+  message: string
+}
+
+// todo 歌手专辑
+export interface ArtistAlbumRes {
+  artist: Artist
+  code: number
+  hotAlbums: Album[]
+  more: boolean
+}
+
+// todo 歌手热门50首
+export interface ArtistTopSongRes {
+  code: number
+  more: boolean
+  songs: Track[]
+}
+
+// todo 歌手mv
+export interface ArtistMvRes {
+  code: number
+  hasMore: boolean
+  mvs: Mv[]
+  time: number
+}
+
+// todo 歌手描述
+export interface ArtistDescRes {
+  briefDesc: string
+  code: number
+  count: number
+  introduction: {
+    ti: string
+    txt: string
+  }[]
+  topicData: any[]
+}
+
+// todo 相似歌手
+export interface SimiArtistRes {
+  code: number
+  artists: Artist[]
 }

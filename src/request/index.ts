@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-let baseURL = 'http://localhost:3000'
+// let baseURL = 'http://localhost:3000'
+let baseURL = 'http://123.249.110.218:4000'
 
 // 创建axios实例
 const service = axios.create({

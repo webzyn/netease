@@ -8,6 +8,9 @@ import Comment from './Comment'
 import { PlaylistTag, HotPlaylistTag, Categories } from './playlistTag'
 import NewSong from './NewSong'
 import Album from './Album'
+import Artist from './Artist'
+import ArtistDetail from './ArtistDetail'
+import Mv from './Mv'
 
 export type PlayList = PlayList
 
@@ -38,3 +41,12 @@ export type NewSong = NewSong
 
 // ! 新碟
 export type Album = Album
+
+// todo 歌手
+export type Artist = Artist
+
+// 歌手详情
+export type ArtistDetail = ArtistDetail
+
+//  todo Mv
+export type Mv = Mv

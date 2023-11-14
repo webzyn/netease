@@ -26,7 +26,9 @@ import {
   ArtistTopSongRes,
   ArtistMvRes,
   ArtistDescRes,
-  SimiArtistRes
+  SimiArtistRes,
+  UserDetailRes,
+  UserPlaylistRes
 } from './types/singleApi'
 
 // todo 获取歌单
@@ -257,6 +259,11 @@ export const getSimiArtist = (id: number | string): Promise<SimiArtistRes> => {
 }
 
 // todo 获取用户详情
-export const getUserDetail = (id: number | string): Promise<any> => {
-  return get('/user/detail', { id }) as Promise<any>
+export const getUserDetail = (uid: number | string): Promise<UserDetailRes> => {
+  return get('/user/detail', { uid }) as Promise<UserDetailRes>
+}
+
+// todo 获取用户歌单
+export const getUserPlaylist = (uid: number | string, page = 1, pageSize = 20): Promise<UserPlaylistRes> => {
+  return get('/user/playlist', { uid, limit: pageSize, offset: (page - 1) * pageSize }) as Promise<UserPlaylistRes>
 }

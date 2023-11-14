@@ -77,7 +77,7 @@ export default function DetailHeader() {
           </Button>
 
           {user && (
-            <Button className={style.second} onClick={() => goUserDetail(id as string)}>
+            <Button className={style.second} onClick={() => goUserDetail(user.userId)}>
               <UserOutlined />
               <span style={{ marginLeft: '2px' }}>个人主页</span>
             </Button>

@@ -6,6 +6,11 @@ export default interface User {
   avatarImgId: number
   avatarImgIdStr: string
   avatarUrl: string
+  allAuthTypes: {
+    type: number
+    desc: string
+    tags: string[]
+  }[]
   backgroundImgId: number
   backgroundImgIdStr: string
   backgroundUrl: string

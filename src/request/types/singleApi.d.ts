@@ -220,3 +220,55 @@ export interface SimiArtistRes {
   code: number
   artists: Artist[]
 }
+
+// ! 用户详情
+export interface UserDetailRes {
+  adValid: boolean
+  bindings: {
+    expiresIn: number
+    refreshTime: number
+    bindingTime: number
+    tokenJsonStr: string
+    url: string
+    expired: boolean
+    userId: number
+    id: number
+    type: number
+  }[]
+  code: number
+  createDays: number
+  createTime: number
+  identify: {
+    actionUrl: string
+    imageDesc: string
+    imageUrl: string
+  }
+  level: number
+  listenSongs: number
+  mobileSign: boolean
+  newUser: boolean
+  pcSign: boolean
+  peopleCanSeeMyPlayRecord: boolean
+  profile: User
+  profileVillageInfo: {
+    imageUrl: string
+    targetUrl: string
+    title: string
+  }
+  recallUser: boolean
+  userPoint: {
+    balance: number
+    blockBalance: number
+    status: number
+    userId: number
+    version: number
+  }
+}
+
+// ! 用户歌单
+export interface UserPlaylistRes {
+  code: number
+  more: boolean
+  playlist: PlayList[]
+  version: string
+}

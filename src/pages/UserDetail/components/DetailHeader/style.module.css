@@ -1,0 +1,85 @@
+.root {
+  min-width: 760px;
+  padding: 30px;
+  display: flex;
+  font-size: 13px;
+  cursor: default;
+  color: var(--text-primary-color);
+  .img {
+    width: 185px;
+    height: 185px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .main {
+    margin-left: 20px;
+    flex: 1;
+    .title {
+      display: flex;
+      .name {
+        font-size: 22px;
+        font-weight: 900;
+      }
+    }
+
+    .tagsInfo {
+      padding: 10px 0;
+      border-bottom: 1px solid #e5e5e5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .tags {
+        font-size: 10px;
+        display: flex;
+        .tag {
+          display: inline-block;
+          line-height: 10px;
+          padding: 3px 8px;
+          border-radius: 9px;
+          background-color: red;
+          margin-right: 6px;
+        }
+        .iconBox {
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #bff3ff;
+        }
+      }
+    }
+
+    .nums {
+      margin: 15px 0 10px;
+      display: flex;
+      align-items: center;
+      .item {
+        cursor: pointer;
+        .count {
+          font-size: 20px;
+          color: #333;
+        }
+        .text {
+          font-size: 12px;
+          color: #666;
+        }
+      }
+      .item:hover {
+        .count {
+          color: #000;
+        }
+        .text {
+          color: #333;
+        }
+      }
+    }
+    .line {
+      height: 30px;
+      width: 1px;
+      background-color: #e5e5e5;
+      margin: 0 30px;
+    }
+  }
+}

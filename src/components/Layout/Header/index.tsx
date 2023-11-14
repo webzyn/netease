@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { useNavigate } from 'react-router-dom'
+import useJump from 'utils/hooks/useJump'
+
 import { LeftOutlined, RightOutlined, SearchOutlined, UserOutlined, CaretDownOutlined } from '@ant-design/icons'
 import { ConfigProvider, Input } from 'antd'
 
@@ -105,11 +107,17 @@ class Right extends Component<any, RightState> {
 
   render() {
     const { isHover } = this.state
+    const { goUserDetail } = this.props
+    const { user } = store.getState()
     return (
       <div className={style.contnet_right}>
         <div className={style.bigCircle}>
-          {store.getState().user.isLogin ? (
-            <img src={store.getState().user.avatarUrl} style={{ width: '30px', height: '30px', borderRadius: '50%' }} />
+          {user.isLogin ? (
+            <img
+              src={user.avatarUrl}
+              style={{ width: '30px', height: '30px', borderRadius: '50%' }}
+              onClick={() => goUserDetail(user.id)}
+            />
           ) : (
             <UserOutlined style={{ color: '#fff', fontSize: '20px' }} />
           )}
@@ -120,7 +128,7 @@ class Right extends Component<any, RightState> {
           onMouseLeave={() => this.setHover(false, 'user')}
           onClick={this.login}
         >
-          <span>{store.getState().user.nickname}</span>
+          <span>{user.nickname}</span>
           <CaretDownOutlined style={{ margin: '0 6px' }} />
         </div>
         <div onMouseEnter={() => this.setHover(true, 'theme')} onMouseLeave={() => this.setHover(false, 'theme')}>
@@ -151,16 +159,17 @@ class Right extends Component<any, RightState> {
   }
 }
 
-export default class Header extends Component {
-  render() {
-    return (
-      <div className={style.header}>
-        <HeaderLeft />
-        <div className={style.content}>
-          <Left />
-          <Right />
-        </div>
+const Header = () => {
+  const { goUserDetail } = useJump()
+  return (
+    <div className={style.header}>
+      <HeaderLeft />
+      <div className={style.content}>
+        <Left />
+        <Right goUserDetail={goUserDetail} />
       </div>
-    )
-  }
+    </div>
+  )
 }
+
+export default Header

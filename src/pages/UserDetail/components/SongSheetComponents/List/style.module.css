@@ -1,0 +1,50 @@
+.container2 {
+  .album {
+    height: 100px;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    .img_wrap {
+      height: 80px;
+      width: 80px;
+      border-radius: 5px;
+      margin: 0 10px 0 15px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      .img {
+        height: 80px;
+        width: 80px;
+      }
+    }
+  }
+  .name {
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    width: 45%;
+  }
+  .name:hover {
+    color: #000;
+  }
+
+  .size {
+    font-size: 14px;
+    color: #999;
+    flex: 1;
+  }
+
+  .time {
+    font-size: 14px;
+    color: #999;
+    cursor: default;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}

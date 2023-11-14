@@ -29,6 +29,7 @@ const ExcitingComments = lazy(() => import('pages/ExcitingComments'))
 const Highquality = lazy(() => import('pages/Highquality'))
 const AlbumDetail = lazy(() => import('pages/AlbumDetail'))
 const SingerDetail = lazy(() => import('pages/SingerDetail'))
+const UserDetail = lazy(() => import('pages/UserDetail'))
 
 const songSheetList = store.getState().songSheetList
 const user = store.getState().user
@@ -361,6 +362,20 @@ const navMenuList: NavMenuObject[] = [
     element: (
       <Suspense fallback={<>加载中...</>}>
         <SingerDetail />
+      </Suspense>
+    )
+  },
+  {
+    path: 'userDetail',
+    name: '歌手详情',
+    meta: {
+      jump: true,
+      showNav: false,
+      search: '/:id/'
+    },
+    element: (
+      <Suspense fallback={<>加载中...</>}>
+        <UserDetail />
       </Suspense>
     )
   }

@@ -1,0 +1,38 @@
+.root {
+  position: relative;
+  .action {
+    position: absolute;
+    top: -30px;
+    right: 30px;
+    display: flex;
+    .box {
+      width: 35px;
+      height: 25px;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: default;
+    }
+    .box:hover {
+      background-color: #e8e8e8;
+    }
+    .current {
+      background-color: #bfbfbf;
+    }
+    .current:hover {
+      background-color: #bfbfbf;
+    }
+    .box1 {
+      border-radius: 5px 0 0 5px;
+    }
+    .box2 {
+      border-left: 2px solid #fff;
+      border-right: 2px solid #fff;
+      box-sizing: border-box;
+    }
+    .box3 {
+      border-radius: 0 5px 5px 0;
+    }
+  }
+}

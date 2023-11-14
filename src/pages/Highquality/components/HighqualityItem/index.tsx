@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { converUnits } from 'utils/utils'
 import useJump from 'utils/hooks/useJump'
 import usePlayer from 'utils/hooks/usePlayer'
+import loadImg from 'utils/loadImg'
 
 import { CaretRightFilled, CaretRightOutlined } from '@ant-design/icons'
 
@@ -26,6 +27,10 @@ export default function HighqualityItem(props: IProp) {
     setPlaylist(playlist.id)
   }
 
+  useEffect(() => {
+    loadImg()
+  }, [playlist])
+
   return (
     <div className={style.item}>
       <div
@@ -34,7 +39,7 @@ export default function HighqualityItem(props: IProp) {
         onMouseLeave={() => mouse(false)}
         onClick={() => goSongSheetDetail(playlist.id)}
       >
-        <img className={style.img} src={playlist.coverImgUrl} alt='' />
+        <img className={style.img} src='/img/default.jpg' data-src={playlist.coverImgUrl} alt='' />
         <span className={style.count}>
           <CaretRightFilled />
           {converUnits(playlist.playCount)}

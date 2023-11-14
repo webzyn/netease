@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux/es/hooks/useSelector'
 import usePlayer from 'utils/hooks/usePlayer'
 import useJump from 'utils/hooks/useJump'
 import { converTime } from 'utils/utils'
-
+import loadImg from 'utils/loadImg'
 import { ConfigProvider, Table } from 'antd'
 import { PlayCircleOutlined, FolderAddOutlined, HeartOutlined, DownloadOutlined } from '@ant-design/icons'
 
@@ -34,6 +34,9 @@ export default function AlbumForTable(props: IProp) {
       }
     })
   }, [])
+  useEffect(() => {
+    loadImg()
+  }, [album])
 
   const onLike = () => {
     alert('喜欢')
@@ -107,7 +110,7 @@ export default function AlbumForTable(props: IProp) {
   return (
     <div className={style.root}>
       <div className={style.img_wrap}>
-        <img className={style.img} src={album?.picUrl} alt='' />
+        <img className={style.img} src='/img/default.jpg' data-src={album?.picUrl} alt='' />
       </div>
       <div className={style.main}>
         <div className={style.title}>

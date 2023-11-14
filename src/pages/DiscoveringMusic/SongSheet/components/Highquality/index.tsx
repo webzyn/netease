@@ -3,6 +3,7 @@ import Icon from 'components/Icon'
 import { getTopPlayListHighquality } from 'request/withOutLoginApi'
 
 import useJump from 'utils/hooks/useJump'
+import loadImg from 'utils/loadImg'
 
 import style from './style.module.css'
 import { PlayList } from 'types'
@@ -18,6 +19,10 @@ export default function Highquality(props: IProp) {
     getHighquality()
   }, [cat])
 
+  useEffect(() => {
+    loadImg()
+  }, [highquality])
+
   // 精品歌单
   const getHighquality = () => {
     getTopPlayListHighquality(cat, 1).then((res) => {
@@ -32,7 +37,7 @@ export default function Highquality(props: IProp) {
       <img className={style.bac} src={highquality?.coverImgUrl}></img>
       <div></div>
       <div className={style.pic}>
-        <img className={style.pic} src={highquality?.coverImgUrl} alt='' />
+        <img className={style.pic} src='/img/default.jpg' data-src={highquality?.coverImgUrl} alt='' />
       </div>
       <div className={style.main}>
         <div className={style.btn}>

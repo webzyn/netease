@@ -5,6 +5,8 @@ import { getnewAlbum } from 'request/withOutLoginApi'
 import useJump from 'utils/hooks/useJump'
 import usePlayer from 'utils/hooks/usePlayer'
 
+import loadImg from 'utils/loadImg'
+
 import style from './style.module.css'
 import custom from 'assets/styles/custom.module.css'
 
@@ -25,6 +27,10 @@ export default function Disc() {
   useEffect(() => {
     setPage(1)
   }, [type])
+
+  useEffect(() => {
+    loadImg()
+  }, [disc])
 
   const getData = (type: string) => {
     getnewAlbum(type, page, 20).then((res) => {
@@ -77,7 +83,11 @@ export default function Disc() {
               onMouseLeave={() => setCurrentHover(-1)}
               onClick={() => goAlbumDetail(item.id)}
             >
-              <img src={item.picUrl} style={{ width: '100%', height: '100%', borderRadius: '4px' }} />
+              <img
+                src='/img/default.jpg'
+                data-src={item.picUrl}
+                style={{ width: '100%', height: '100%', borderRadius: '4px' }}
+              />
               {currentHover === index && (
                 <div className={style.circle} onClick={(e) => play(e, item.id)}>
                   <CaretRightOutlined

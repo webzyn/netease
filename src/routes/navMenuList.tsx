@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Navigate } from 'react-router-dom'
 import store from 'store'
-import { SongSheetList, SongSheetType } from 'types/api'
+import { SongSheetType } from 'types/api'
 
 import { NavMenuObject } from './routes'
 
@@ -13,7 +13,7 @@ import Attention from 'pages/Attention'
 import Live from 'pages/Live'
 import PrivateRoaming from 'pages/PrivateRoaming'
 // 我的音乐
-import FavoriteMusic from 'pages/myMusic/FavoriteMusic'
+// import FavoriteMusic from 'pages/myMusic/FavoriteMusic'
 import LocalAndDownload from 'pages/myMusic/LocalAndDownload'
 import RecentlyPlayed from 'pages/myMusic/RecentlyPlayed'
 // 歌单
@@ -43,14 +43,14 @@ if (user.isLogin) {
   ) as SongSheetType) || { id: '' }
   // 创建的歌单
   const createds: SongSheetType[] = songSheetList.reduce((init: SongSheetType[], item) => {
-    if (!item.subscribed && item.specialType !== 5) {
+    if (item.specialType !== 5 && item.userId === user.id) {
       init.push(item)
     }
     return init
   }, [])
   // 收藏的歌单
   const favorites: SongSheetType[] = songSheetList.reduce((init: SongSheetType[], item) => {
-    if (item.subscribed && item.userId !== user.id) {
+    if (item.specialType !== 5 && item.userId !== user.id) {
       init.push(item)
     }
     return init

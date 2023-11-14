@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CaretRightFilled, CaretRightOutlined, UserOutlined } from '@ant-design/icons'
 import style from './style.module.css'
 
 import { converUnits } from 'utils/utils'
 import useJump from 'utils/hooks/useJump'
 import usePlayer from 'utils/hooks/usePlayer'
+import loadImg from 'utils/loadImg'
 
 import { PlayList } from 'types'
 export interface IProps {
@@ -26,6 +27,10 @@ export default function GlobalRank(props: IProps) {
     setPlaylist(playList.id)
   }
 
+  useEffect(() => {
+    loadImg()
+  }, [playList])
+
   return (
     <div style={{ width: '100%' }}>
       <div
@@ -34,7 +39,11 @@ export default function GlobalRank(props: IProps) {
         onMouseLeave={() => mouse(false)}
         onClick={() => goSongSheetDetail(playList.id)}
       >
-        <img src={playList.coverImgUrl} style={{ width: '100%', height: '100%', borderRadius: '4px' }} />
+        <img
+          src='/img/default.jpg'
+          data-src={playList.coverImgUrl}
+          style={{ width: '100%', height: '100%', borderRadius: '4px' }}
+        />
         <span className={style.count}>
           <CaretRightFilled />
           {converUnits(playList.playCount)}

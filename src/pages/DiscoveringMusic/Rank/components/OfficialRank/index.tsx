@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
 import useJump from 'utils/hooks/useJump'
 import usePlayer from 'utils/hooks/usePlayer'
-
+import loadImg from 'utils/loadImg'
 import { getSongSheetDetail } from 'request/withOutLoginApi'
 
 import { ConfigProvider, Table } from 'antd'
@@ -30,6 +30,10 @@ export default function OfficialRank(props: IProps) {
       }
     })
   }, [])
+
+  useEffect(() => {
+    loadImg()
+  }, [playList])
 
   const goSinger = (id: number) => {
     alert('歌手详情' + id)
@@ -94,7 +98,7 @@ export default function OfficialRank(props: IProps) {
         onMouseLeave={() => setIsHover(false)}
         onClick={() => goSongSheetDetail(track.id)}
       >
-        <img className={style.img} src={track.coverImgUrl} />
+        <img className={style.img} src='/img/default.jpg' data-src={track.coverImgUrl} />
         {isHover && (
           <div className={style.circle} onClick={play}>
             <CaretRightOutlined

@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux/es/hooks/useSelector'
 import usePlayer from 'utils/hooks/usePlayer'
 import useJump from 'utils/hooks/useJump'
 import { converTime } from 'utils/utils'
+import loadImg from 'utils/loadImg'
 
-import { trackAll, getSongSheetDetail, getSongDetail } from 'request/withOutLoginApi'
+import { getSongSheetDetail, getSongDetail } from 'request/withOutLoginApi'
 import { ConfigProvider, Table } from 'antd'
 import { PlayCircleOutlined, FolderAddOutlined, HeartOutlined, DownloadOutlined } from '@ant-design/icons'
 
@@ -28,6 +29,10 @@ export default function Item(props: IProp) {
   useEffect(() => {
     getData()
   }, [])
+
+  useEffect(() => {
+    loadImg()
+  }, [playlistDetail])
 
   const getData = () => {
     getSongSheetDetail(id).then((res) => {
@@ -115,7 +120,7 @@ export default function Item(props: IProp) {
   return (
     <div className={style.root}>
       <div className={style.img_wrap}>
-        <img className={style.img} src={playlistDetail?.coverImgUrl} alt='' />
+        <img className={style.img} src='/img/default.jpg' data-src={playlistDetail?.coverImgUrl} alt='' />
       </div>
       <div className={style.main}>
         <div className={style.title}>

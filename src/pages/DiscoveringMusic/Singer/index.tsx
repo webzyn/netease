@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react'
 
 import useJump from 'utils/hooks/useJump'
+import loadImg from 'utils/loadImg'
 import { getArtistList } from 'request/withOutLoginApi'
 
 import style from './style.module.css'
@@ -100,6 +101,10 @@ export default function Singer() {
     getData()
   }, [page])
 
+  useEffect(() => {
+    loadImg()
+  }, [artists])
+
   const getData = (p?: number) => {
     getArtistList(area, type, initial, p || page, 25).then((res) => {
       if (res.code === 200) {
@@ -118,7 +123,12 @@ export default function Singer() {
         {artists.map((item) => (
           <div className={style.singer} key={item.id}>
             <div className={style.img_wrap}>
-              <img className={style.img} src={item.img1v1Url} onClick={() => goSingerDetail(item.id, item)} />
+              <img
+                className={style.img}
+                src='/img/default.jpg'
+                data-src={item.img1v1Url}
+                onClick={() => goSingerDetail(item.id, item)}
+              />
             </div>
             <div className={style.info}>
               <div onClick={() => goSingerDetail(item.id)} className={style.name}>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { CaretRightOutlined } from '@ant-design/icons'
 
 import usePlayer from 'utils/hooks/usePlayer'
+import loadImg from 'utils/loadImg'
 import { getTopSong, getSongDetail } from 'request/withOutLoginApi'
 
 import style from './style.module.css'
@@ -14,6 +15,10 @@ export default function NewSongs() {
   useEffect(() => {
     getData()
   }, [])
+
+  useEffect(() => {
+    loadImg()
+  }, [newSongs])
 
   const getData = () => {
     getTopSong().then((res) => {
@@ -39,7 +44,7 @@ export default function NewSongs() {
       {newSongs?.map((item, repertory) => (
         <div key={item.id} className={style.item} onDoubleClick={() => playSong('最新音乐_全部', songs, repertory)}>
           <div className={style.img_wrap}>
-            <img className={style.img} src={item.album.picUrl} alt='' />
+            <img className={style.img} src='/img/default.jpg' data-src={item.album.picUrl} alt='' />
             <div className={style.circle}>
               <CaretRightOutlined
                 style={{

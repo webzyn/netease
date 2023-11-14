@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CaretRightFilled, CaretRightOutlined, UserOutlined } from '@ant-design/icons'
 import { IProps } from './types'
 import style from './style.module.css'
@@ -6,6 +6,7 @@ import style from './style.module.css'
 import { converUnits } from 'utils/utils'
 import useJump from 'utils/hooks/useJump'
 import usePlayer from 'utils/hooks/usePlayer'
+import loadImg from 'utils/loadImg'
 
 export default function Item(props: IProps) {
   const [isHover, setIsHover] = useState(false)
@@ -22,6 +23,10 @@ export default function Item(props: IProps) {
     setPlaylist(props.id)
   }
 
+  useEffect(() => {
+    loadImg()
+  }, [props])
+
   return (
     <div style={{ width: '100%' }}>
       <div
@@ -30,7 +35,11 @@ export default function Item(props: IProps) {
         onMouseLeave={() => mouse(false)}
         onClick={() => goSongSheetDetail(props.id)}
       >
-        <img src={props.picUrl} style={{ width: '100%', height: '100%', borderRadius: '4px' }} />
+        <img
+          src='/img/default.jpg'
+          data-src={props.picUrl}
+          style={{ width: '100%', height: '100%', borderRadius: '4px' }}
+        />
         <span className={style.count}>
           <CaretRightFilled />
           {converUnits(props.playCount)}

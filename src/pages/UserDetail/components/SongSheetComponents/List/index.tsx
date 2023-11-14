@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getUserPlaylist } from 'request/withOutLoginApi'
 import { PlayList } from 'types'
 import useJump from 'utils/hooks/useJump'
+import loadImg from 'utils/loadImg'
 
 import style from './style.module.css'
 
@@ -22,6 +23,10 @@ export default function List(props: IProp) {
   useEffect(() => {
     getData()
   }, [page])
+
+  useEffect(() => {
+    loadImg()
+  }, [list])
 
   const getData = () => {
     getUserPlaylist(id as string, page).then((res) => {
@@ -49,7 +54,7 @@ export default function List(props: IProp) {
           onMouseLeave={() => setCurrentMove(-1)}
         >
           <div className={style.img_wrap} onClick={() => goSongSheetDetail(item.id)}>
-            <img className={style.img} src={item.coverImgUrl} alt='' />
+            <img className={style.img} src='/img/default.jpg' data-src={item.coverImgUrl} alt='' />
           </div>
 
           <div className={style.name} onClick={() => goSongSheetDetail(item.id)}>

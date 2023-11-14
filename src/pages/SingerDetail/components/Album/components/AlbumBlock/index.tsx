@@ -5,6 +5,7 @@ import { getArtistAlbum } from 'request/withOutLoginApi'
 import useJump from 'utils/hooks/useJump'
 import usePlayer from 'utils/hooks/usePlayer'
 import dayjs from 'utils/dayjs'
+import loadImg from 'utils/loadImg'
 import { CaretRightOutlined } from '@ant-design/icons'
 
 import style from './style.module.css'
@@ -21,6 +22,10 @@ export default function AlbumBlock() {
   useEffect(() => {
     getData()
   }, [page])
+
+  useEffect(() => {
+    loadImg()
+  }, [albums])
 
   const getData = () => {
     getArtistAlbum(id as string, page).then((res) => {
@@ -46,7 +51,7 @@ export default function AlbumBlock() {
             onMouseLeave={() => setCurrentMove(-1)}
             onClick={() => goAlbumDetail(item.id)}
           >
-            <img className={style.img} src={item.picUrl} />
+            <img className={style.img} src='/img/default.jpg' data-src={item.picUrl} />
             {currentMove === index && (
               <div className={style.circle} onClick={(e) => play(e, item.id)}>
                 <CaretRightOutlined

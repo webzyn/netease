@@ -4,6 +4,7 @@ import { getUserPlaylist } from 'request/withOutLoginApi'
 import { PlayList } from 'types'
 import useJump from 'utils/hooks/useJump'
 import usePlayer from 'utils/hooks/usePlayer'
+import loadImg from 'utils/loadImg'
 
 import { CaretRightOutlined } from '@ant-design/icons'
 
@@ -26,6 +27,10 @@ export default function Block(props: IProp) {
   useEffect(() => {
     getData()
   }, [page])
+
+  useEffect(() => {
+    loadImg()
+  }, [list])
 
   const getData = () => {
     getUserPlaylist(id as string, page).then((res) => {
@@ -57,7 +62,7 @@ export default function Block(props: IProp) {
             onMouseLeave={() => setCurrentMove(-1)}
             onClick={() => goSongSheetDetail(item.id)}
           >
-            <img className={style.img} src={item.coverImgUrl} />
+            <img className={style.img} src='/img/default.jpg' data-src={item.coverImgUrl} />
             {currentMove === index && (
               <div className={style.circle} onClick={(e) => play(e, item.id)}>
                 <CaretRightOutlined

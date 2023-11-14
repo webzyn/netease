@@ -4,6 +4,7 @@ import { getArtistAlbum } from 'request/withOutLoginApi'
 
 import useJump from 'utils/hooks/useJump'
 import dayjs from 'utils/dayjs'
+import loadImg from 'utils/loadImg'
 
 import style from './style.module.css'
 import { Album } from 'types'
@@ -18,6 +19,10 @@ export default function AlbumList() {
   useEffect(() => {
     getData()
   }, [page])
+
+  useEffect(() => {
+    loadImg()
+  }, [albums])
 
   const getData = () => {
     getArtistAlbum(id as string, page).then((res) => {
@@ -39,7 +44,7 @@ export default function AlbumList() {
           onMouseLeave={() => setCurrentMove(-1)}
         >
           <div className={style.img_wrap} onClick={() => goAlbumDetail(item.id)}>
-            <img className={style.img} src={item.picUrl} alt='' />
+            <img className={style.img} src='/img/default.jpg' data-src={item.picUrl} alt='' />
           </div>
 
           <div className={style.name} onClick={() => goAlbumDetail(item.id)}>

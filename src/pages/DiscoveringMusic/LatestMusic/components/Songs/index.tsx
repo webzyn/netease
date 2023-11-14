@@ -5,6 +5,7 @@ import { PlayCircleOutlined, FolderAddOutlined, CaretRightOutlined } from '@ant-
 import { converTime } from 'utils/utils'
 import { getTopSong, getSongDetail } from 'request/withOutLoginApi'
 import usePlayer from 'utils/hooks/usePlayer'
+import loadImg from 'utils/loadImg'
 
 import custom from 'assets/styles/custom.module.css'
 import style from './style.module.css'
@@ -20,6 +21,10 @@ export default function Songs() {
   useEffect(() => {
     getData(type)
   }, [type])
+
+  useEffect(() => {
+    loadImg()
+  }, [songs])
 
   const getData = (type: number) => {
     getTopSong(type).then((res) => {
@@ -88,7 +93,7 @@ export default function Songs() {
           >
             <div style={{ color: '#ccc', fontSize: '12px' }}>{index < 9 ? '0' + (index + 1) : index + 1}</div>
             <div className={style.img_wrap} onClick={() => addSongAndPlay(song.id)}>
-              <img className={style.img} src={song.al.picUrl} alt='' />
+              <img className={style.img} src='/img/default.jpg' data-src={song.al.picUrl} alt='' />
               <div className={style.circle}>
                 <CaretRightOutlined
                   style={{
